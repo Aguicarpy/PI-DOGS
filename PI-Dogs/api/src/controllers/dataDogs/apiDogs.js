@@ -11,8 +11,10 @@ const apiDogs = async() => {
                 id,
                 name,
                 image: image.url,
-                height: height.metric,
-                weight: weight.metric,
+                minWeight: weight.metric.slice(0, 2).replace(" ", ""),
+                maxWeight: weight.metric.slice(4).replace(" ", ""),
+                minHeight: height.metric.slice(0, 2).replace(" ", ""),
+                maxHeight: height.metric.slice(4).replace(" ", ""),
                 age: life_span,
                 temperament: temperament ? temperament.split(',').map((temp) => temp.trim()) : [],
             }

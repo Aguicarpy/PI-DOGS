@@ -4,7 +4,7 @@ const dbDogs = require('../dataDogs/dbDogs');
 const getAllDogs = async () => {
         const api = await apiDogs();
         const db = await dbDogs(); 
-        const allDogs = api.concat(db) 
+        const allDogs = api.concat(db)
         return allDogs
 }
 

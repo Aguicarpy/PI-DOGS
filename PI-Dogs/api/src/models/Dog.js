@@ -19,16 +19,30 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      height: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      weight: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       age: {
         type: DataTypes.STRING,
+      },
+      maxHeight: {
+        type: DataTypes.STRING,
+        // allowNull: false,
+      },
+      minHeight: {
+        type: DataTypes.STRING,
+        // allowNull: false,
+      },
+      // Peso
+      maxWeight: {
+        type: DataTypes.STRING,
+        // allowNull: false,
+      },
+      minWeight: {
+        type: DataTypes.STRING,
+        // allowNull: false,
+      },
+      dataBaseDog: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
       },
     },
     { timestamps: false }

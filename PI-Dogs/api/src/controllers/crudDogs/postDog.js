@@ -1,14 +1,13 @@
 const {Dog, Temperament} = require('../../db')
 
-const postDog = async(name, image, height, weight, age, temperament) => {
-    const newCreate = await Dog.create({name, image, height, weight, age, temperament})
+const postDog = async(name, image, maxHeight, minHeight, minWeight, maxWeight, age, temperaments) => {
+   
+    const newCreate = await Dog.create({name, image, maxHeight, minHeight, minWeight, maxWeight, age})
     
-    const temperamentDb = await Temperament.findAll({
-        where: {
-            name: temperament,
-        },
-    });
-    newCreate.addTemperament(temperamentDb);
+    await Dog.findAll({
+        include: Temperament
+    })
+    newCreate.addTemperaments(temperaments)
     return newCreate
 }
 

@@ -1,8 +1,9 @@
+const { where } = require('sequelize');
 const getAllDogs = require('../controllers/crudDogs/getAllDogs');
 const getDogId = require('../controllers/crudDogs/getDogId');
 const getDogName = require('../controllers/crudDogs/getDogName');
 const postDog = require('../controllers/crudDogs/postDog');
-const {Temperament} = require('../db')
+const {Temperament, Dog} = require('../db')
 //Handler efectuando manejador a las rutas
 const handlerAllDogs = async(req, res) => {
     try {
@@ -37,9 +38,13 @@ const handlerNameDog = async(req, res) => {
 }
 
 const handlerCreateDog = async(req, res) => {
+    const { name, image, maxHeight, minHeight, minWeight, maxWeight, age, temperaments } = req.body;
+    if (!name || !maxHeight || !minHeight || !minWeight || !maxWeight) {
+        return res.status(400).send(`Ingrese los campos`);
+    }
     try {
-      const { name, image, height, weight, age, temperament } = req.body;
-      const newDog = await postDog(name, image, height, weight, age, temperament);
+      const newDog = await postDog(name, image, maxHeight, minHeight, minWeight, maxWeight, age,temperaments);
+
         if(name){
             return newDog ? res.json(newDog) : res.status(404).send('Coloque nombre del perro')
         }
