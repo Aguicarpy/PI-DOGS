@@ -3,11 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter as Routes } from 'react-router-dom'
+import { Provider } from 'react-redux';
+import store from './redux/store';
+// import axios from 'axios';
+
+// axios.defaults.baseURL = 'http://localhost:3011/';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <Routes>
+      <App />
+    </Routes>
+  </Provider>,
   document.getElementById('root')
 );
 
