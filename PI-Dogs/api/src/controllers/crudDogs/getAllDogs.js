@@ -1,11 +1,16 @@
 const apiDogs = require('../dataDogs/apiDogs');
-const dbDogs = require('../dataDogs/dbDogs');
+const getAllTemps = require('../crudTemperaments/getTemperaments')
 
 const getAllDogs = async () => {
-        const api = await apiDogs();
-        const db = await dbDogs(); 
-        const allDogs = api.concat(db)
-        return allDogs
-}
-
+        try {
+                let allDogs = await apiDogs();
+                let temperamentDb = await getAllTemps();
+                return {
+                  all_Dogs: allDogs,
+                  DB_Temperament: temperamentDb,
+                };
+              } catch (error) {
+                console.error(error);
+              }
+        }
 module.exports = getAllDogs

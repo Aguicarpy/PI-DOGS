@@ -3,27 +3,27 @@ const axios = require("axios");
 const { API_KEY } = process.env;
 
 const getAllTemps = async () => {
-  try{
-    const response = await axios(
-      `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`
-    );
-    response.data.forEach((dog) => {
-      if (dog.temperament) {
-        let temps = dog.temperament.split(", ");
-        //creacion de un array con temperamentos
-        temps.forEach((dogTemp) => {
-          Temperament.findOrCreate({
-            where: { name: dogTemp },
-          });
-        });
-      }
-    });
-    const alltemps = await Temperament.findAll();
-    return alltemps
+    try {
+      let temperamentApi = new Set();
 
-  } catch (error) {
-    if(!tempsFound) throw Error('Error founded')
-  }
-};
+      //busca a los temps de la api
+      const consultaApi = await axios.get(
+        `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`
+      );
+      consultaApi.data.forEach((temp) => {
+        let resultTempArray = temp.temperament ? temp.temperament.split(", ") : [];
+        resultTempArray.forEach((temp) => temperamentApi.add(temp));
+      });
+      const temperamentApiResult = Array.from(temperamentApi);
+
+      temperamentApiResult.forEach(async (temperament) => {
+        await Temperament.findOrCreate({ where: { name: temperament } });
+      });
+      const temperamentDb = await Temperament.findAll();
+      return temperamentDb;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 module.exports = getAllTemps;

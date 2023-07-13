@@ -11,5 +11,4 @@ const postDog = async(name, image, maxHeight, minHeight, minWeight, maxWeight, a
     return newCreate
 }
 
-
 module.exports = postDog

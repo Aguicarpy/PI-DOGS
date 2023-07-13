@@ -1,40 +1,38 @@
-const { where } = require('sequelize');
 const getAllDogs = require('../controllers/crudDogs/getAllDogs');
 const getDogId = require('../controllers/crudDogs/getDogId');
 const getDogName = require('../controllers/crudDogs/getDogName');
 const postDog = require('../controllers/crudDogs/postDog');
 const {Temperament, Dog} = require('../db')
+
 //Handler efectuando manejador a las rutas
 const handlerAllDogs = async(req, res) => {
     try {
-        const allDogs = await getAllDogs();
-        return allDogs ? res.json(allDogs) : res.status(404).json('No hay perros ni en la api ni en la database');
-    }catch (error) {
-    return res.status(500).json(error.message);
- }
-}
-
-const handlerIdDog = async(req, res) => {
-    try {
-        const { id } = req.params;
-        const dogs = await getAllDogs(id); //EJECUCIÓN POR ID
-        if (id) {
-          const idDog = await dogs.find((dog) => dog.id === +id);
-          return idDog ? res.json(idDog) : res.status(404).json('Dog by id not found')
+        const { name } = req.query;
+        // Llama a la funcion GetAllDogs que trae todos los perros
+        const {all_Dogs}  = await getAllDogs();
+    
+        if (name) {
+          let nameDog = await getDogName(name);
+          return nameDog.length > 0 ? res.json(nameDog) : res.status(404).send(`Dog not found`);
+        } else {
+          return res.json(all_Dogs);
         }
       } catch (error) {
         return res.status(500).json({ error: error.message });
       }
 }
 
-const handlerNameDog = async(req, res) => {
+const handlerIdDog = async(req, res) => {
     try {
-        const {name} = req.query
-        const dogName = await getDogName(name); //EJECUCIÓN POR NAME
-        return dogName ? res.json(dogName) : res.status(404).json('Raza no encontrada');
-    } catch (error) {
-        return res.status(500).json(error.message)
-    }
+        const { id } = req.params;
+       
+        if (id) {
+            let dogId = await getDogId(id)
+            return dogId ? res.json(dogId) : res.status(404).json('Dog by id not found')
+        }
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
 }
 
 const handlerCreateDog = async(req, res) => {
@@ -55,4 +53,4 @@ const handlerCreateDog = async(req, res) => {
 
 
 
-module.exports = {handlerAllDogs, handlerIdDog, handlerNameDog, handlerCreateDog}
+module.exports = {handlerAllDogs, handlerIdDog, handlerCreateDog}
