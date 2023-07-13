@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import axios from 'axios'
-import SearchBar from "../../components/Home/NavBar/SearchBar";
+// import SearchBar from "../../components/Home/NavBar/SearchBar";
 import Cards from "../../components/Home/Cards/Cards";
 
 
@@ -20,7 +20,7 @@ const Home = () => {
     return ( 
       <div className='home'>
       <h2>Jaguas</h2>
-      <SearchBar onSearch={onSearch} />
+      {/* <SearchBar onSearch={onSearch}  /> */}
       <Cards dogs={dogs}/>
       </div>
      );

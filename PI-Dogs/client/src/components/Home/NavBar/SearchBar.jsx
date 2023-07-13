@@ -1,28 +1,45 @@
-import React from "react";
-import { useState } from "react";
+import {useState} from "react";
+import { searchDogName } from "../../../redux/actions";
+import { useSelector, useDispatch } from "react-redux";
 
-
-
-const SearchBar = ({onSearch}) => {
+const SearchBar = () => {
     const [name, setName] = useState('')
-    
-    const handleChange = (event) => {
-    setName(event.target.value)
-    }
+    const dispatch = useDispatch();
 
-    const cleanInput = (event) => {
-        onSearch(name)
-        setName(' ')
+
+
+    const handleChange = (event) => {
+        event.preventDefault();
+        setName(event.target.value);
+        // setPage(1)
+    }
+    
+    // const cleanInput = (event) => {
+    //     onSearch(name);
+    //     setName('');
+    // }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (!name) {
+            return alert("Please write a name");
+          } else {
+            dispatch(searchDogName(name));
+            setName("");
+          }
     }
 
     return(
         <div>
             <input 
-            type="search"
+            type="text"
             placeholder="Ingrese raza del perro"
-            onChange={handleChange}
-            value={name}/>
-            <button onClick={()=> cleanInput()}>Search Dog</button>
+            onChange={(e)=> handleChange(e)}
+            value={name}
+            />
+            <button 
+            type='submit'
+            onClick={(event)=> handleSubmit(event)}>Search Dog</button>
         </div>
     )
 }

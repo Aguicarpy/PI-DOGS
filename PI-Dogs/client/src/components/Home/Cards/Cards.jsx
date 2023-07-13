@@ -1,9 +1,10 @@
 import Card from "./Card"
 import { useDispatch, useSelector } from 'react-redux'
 import { useState, useEffect} from "react"
-import { cleanDetail, getDogs, getTemperaments,searchDogName,filterByTemperaments,filterByName,filterByWeight,filterCreated} from "../../../redux/actions"
+import { cleanDetail, getDogs, getTemperaments,filterByTemperaments,filterByName,filterByWeight,filterCreated} from "../../../redux/actions"
 import paginate from '../../../helpers/paginate'
 import { Link } from "react-router-dom"
+import SearchBar from "../NavBar/SearchBar"
 
 const Cards = () => {
     
@@ -121,7 +122,9 @@ const Cards = () => {
 
     return(
     <>
-   
+        <div>
+         <SearchBar />
+        </div>
 
         {/* Filters and Form */}
         <div >
@@ -171,7 +174,7 @@ const Cards = () => {
         
    
             {
-               displayed.map(({image, name, weight, temperament, id}) => {
+               displayed.map(({image, name, minWeight, maxWeight, temperament, id}) => {
                 if(typeof id === 'number'){
                     return(
                         <Card 
@@ -179,7 +182,8 @@ const Cards = () => {
                         id={id}
                         image={image}
                         name={name}
-                        weight={weight}
+                        minWeight={minWeight}
+                        maxWeight={maxWeight}
                         temperament={temperament}
                         />
                     )

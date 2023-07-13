@@ -46,14 +46,13 @@ export const searchDogName = (name) => {
     const endpoint = `/dogs?name=${name}`
       return async(dispatch)=>{
         try {
-            const response = await axios.get(endpoint);
+            const response = await axios(endpoint);
               return dispatch({
                 type: SEARCH_DOG_NAME,
                 payload: response.data,
               });
         } catch (error) {
-            console.log('Dog not found', error);
-        }
+            console.error(`Dog not found, try another name`);        }
     }
 }
 
