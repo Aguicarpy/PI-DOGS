@@ -1,29 +1,19 @@
-import {useState} from 'react'
-import axios from 'axios'
-// import SearchBar from "../../components/Home/NavBar/SearchBar";
+import React from "react";
+import { Fragment } from "react";
+import SideBar from "../../components/SideBar/SideBar";
 import Cards from "../../components/Home/Cards/Cards";
+import NavBar from "../../components/Home/NavBar/NavBar";
+import styles from '../Home/Home.module.css'
 
 
-const Home = () => {
-  const [dogs, setDogs] = useState([])
-  const onSearch = async(name) => {
-    try {
-      const response = await axios(`http://localhost:3011/dogs/${name}`)
-      if(response.data){
-        setDogs((oldDogs) => [...oldDogs, response.data])
-      }
-    } catch (error) {
-      alert('No hay perros con esa raza')
-    }
-  }
-
-    return ( 
-      <div className='home'>
-      <h2>Jaguas</h2>
-      {/* <SearchBar onSearch={onSearch}  /> */}
-      <Cards dogs={dogs}/>
+export default function Home() {
+  return (
+    <Fragment>
+      <div className={styles.mainContainer}>
+        <NavBar />
+        <SideBar />
+        <Cards />
       </div>
-     );
-  }
-
-  export default Home;
+    </Fragment>
+  );
+}

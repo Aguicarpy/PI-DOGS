@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom"
+import Landing from "../../components/Landing/Landing"
 // import style from '../views/Landing.module.css'
 
-const Landing = () => {
+const LandingPage = () => {
     return(
         <div>
-            <h2>Landing</h2>
-            <button>
-                <Link to='/home'>Home</Link>
-            </button>
+            <Landing />
         </div>
     )
 }
 
-export default Landing
+export default LandingPage

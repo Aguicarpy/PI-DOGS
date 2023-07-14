@@ -1,11 +1,11 @@
-import DetailCard from "../../components/Detail/DetailCard"
+import DogDetail from "../../components/Detail/DogDetail"
 
 
 const Detail = () => {
     
     return(
         <div>
-            <DetailCard />
+            <DogDetail />
         </div>
     )
 }

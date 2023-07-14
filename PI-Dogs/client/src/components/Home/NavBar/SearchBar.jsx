@@ -1,47 +1,35 @@
-import {useState} from "react";
-import { searchDogName } from "../../../redux/actions";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getDogsByName } from "../../../redux/actions";
+import styles from "./SearchBar.module.css";
 
-const SearchBar = () => {
-    const [name, setName] = useState('')
-    const dispatch = useDispatch();
+export default function SearchBar() {
+  const [dogState, setDogsState] = useState("");
+  const dispatch = useDispatch();
 
-
-
-    const handleChange = (event) => {
-        event.preventDefault();
-        setName(event.target.value);
-        // setPage(1)
-    }
+  function handleClick(e) {
+    e.preventDefault();
     
-    // const cleanInput = (event) => {
-    //     onSearch(name);
-    //     setName('');
-    // }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (!name) {
-            return alert("Please write a name");
-          } else {
-            dispatch(searchDogName(name));
-            setName("");
-          }
+    if (dogState.length === 0) {
+      return alert("Please input a name to start the search");
+    } else {
+      dispatch(getDogsByName(dogState));
+      // setDogsState("");
     }
+  }
 
-    return(
-        <div>
-            <input 
-            type="text"
-            placeholder="Ingrese raza del perro"
-            onChange={(e)=> handleChange(e)}
-            value={name}
-            />
-            <button 
-            type='submit'
-            onClick={(event)=> handleSubmit(event)}>Search Dog</button>
-        </div>
-    )
+  return (
+    <div className={styles.searchBarObject}>
+      <input
+        type="text"
+        placeholder="Search a dog..."
+        className={styles.input}
+        value={dogState}
+        onChange={(e) => setDogsState(e.target.value)}
+      />
+      <button type="submit" onClick={handleClick}>
+        <span className="material-icons">search</span>
+      </button>
+    </div>
+  );
 }
-
-export default SearchBar;

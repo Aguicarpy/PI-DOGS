@@ -1,4 +1,6 @@
-const paginate = (items, page = 1, perPage = 8) => {
+const paginate = (items) => {
+    const page = 1 
+    const perPage = 8
     const offset = perPage * (page - 1);
     const totalPages = Math.ceil(items.length / perPage);
     const paginatedItems = items.slice(offset, perPage * page);

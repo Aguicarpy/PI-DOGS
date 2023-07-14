@@ -1,111 +1,134 @@
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:3011';
-export const GET_DOGS = "GET_DOGS";
-export const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
-export const SEARCH_DOG_NAME = "GET_DOG_NAME";
-export const GET_DETAIL = "GET_DETAIL";
-export const CLEAN_DETAIL = "CLEAN_DETAIL";
-export const FILTER_BY_TEMPERAMENTS = "FILTER_BY_TEMPERAMENTS";
-export const FILTER_CREATED = "FILTER_CREATED";
-export const FILTER_BY_NAME = "FILTER_BY_NAME";
-export const FILTER_BY_WEIGHT = "FILTER_BY_WEIGHT";
 
-
-export const getDogs = () => {
-    const endpoint = '/dogs';
-        return async(dispatch) => {
-            try {
-                let response = await axios.get(endpoint);
-                return dispatch({
-                    type: GET_DOGS,
-                    payload: response.data,
-                });
-            } catch (error) {
-                console.log(error);
-            }
-        };
-};
-
-export const getTemperaments = () => {
-        const endpoint = '/temperaments';
-        return async(dispatch) => {
-            try {
-                let response = await axios.get(endpoint);
-                return dispatch({
-                    type: GET_TEMPERAMENTS,
-                    payload: response.data,
-                });
-                
-            } catch (error) {
-                console.log(error);
-            }
-        };
-}
-
-export const searchDogName = (name) => {
-    const endpoint = `/dogs?name=${name}`
-      return async(dispatch)=>{
-        try {
-            const response = await axios(endpoint);
-              return dispatch({
-                type: SEARCH_DOG_NAME,
-                payload: response.data,
-              });
-        } catch (error) {
-            console.error(`Dog not found, try another name`);        }
+export function orderByName(payload) {
+    return {
+        type: 'ORDER_BY_NAME',
+        payload
     }
 }
 
-export const getDetail = (id) => {
-    const endpoint = `/dogs/${id}`
-    return async(dispatch) =>{
-        let response = await axios.get(endpoint)
+export function orderByWeight(payload) {
+    return {
+        type: 'ORDER_BY_WEIGHT',
+        payload
+    }
+}
+
+export function getDogs() {
+    return async function (dispatch) {
+        var json = await axios.get('http://localhost:3011/dogs')
         return dispatch({
-            type: GET_DETAIL,
-            payload: response.data
+            type: 'GET_DOGS',
+            payload: json.data
         })
     }
 }
-export const cleanDetail = () =>{
-    return ({type: CLEAN_DETAIL})
+
+export function filterDogsByMAXWeight(payload) {
+    return {
+        type: 'FILTER_BY_MAX_WEIGHT',
+        payload
+    }
 }
 
-export const createDog = (payload) => {
-    const endpoint = '/dogs'
+export function filterDogsByMINWeight(payload) {
+    return {
+        type: 'FILTER_BY_MIN_WEIGHT',
+        payload
+    }
+}
+
+export function getDogsByName(name) {
     return async function (dispatch) {
-      try {
-        const response = await axios.post(endpoint,payload);
+        const { data } = await axios.get(`http://localhost:3011/dogs?name=${name}`);
+        return dispatch({
+            type: "GET_DOGS_BY_NAME",
+            payload: data
+        });
+    };
+}
+
+export function getTemperamentsList() {
+    return async function (dispatch) {
+        var json = await axios.get('http://localhost:3011/temperaments');
+        var listOfTemperaments = json.data.map(el => el.name)
+        return dispatch({
+            type: 'GET_TEMPERAMENTS_LIST',
+            payload: listOfTemperaments
+        });
+    }
+}
+
+export function postDog(payload) {
+    return async function (dispatch) {
+        const response = await axios.post('http://localhost:3011/dogs', payload);
         return response;
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    }
 }
 
-export const filterByTemperaments = (payload) => {
-    return {
-      type: FILTER_BY_TEMPERAMENTS,
-      payload,
-    };
-}
-  
-export const filterByName = (payload) => {
-    return {
-      type: FILTER_BY_NAME,
-      payload,
-    };
+// export function getDogsByBreed(payload) {
+//     return async function (dispatch) {
+//         try {
+//             var json = await axios.get(`http://localhost:3011/breedGroup?breedGroup=${payload}`);
+//             return dispatch({
+//                 type: 'GET_DOGS_BY_BREED',
+//                 payload: json.data
+//             })
+//         } catch (error) {
+//             console.log(error, "Error on the filters in actions file")
+//         }
+//     }
+// }
+
+// export function getBreeds() {
+//     return async function (dispatch) {
+//         var json = await axios.get('http://localhost:3011/breedGroups');
+//         return dispatch({
+//             type: 'GET_BREEDS',
+//             payload: json.data
+//         });
+//     }
+// }
+
+export function filterDogsByTemperament(payload) {
+    return async function (dispatch) {
+        try {
+            var json = await axios.get(`http://localhost:3011/dog/?temperaments=${payload}`);
+            return dispatch({
+                type: 'GET_DOGS_BY_TEMP',
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error, "Error on the filters in actions file")
+        }
+    }
 }
 
-export const filterByWeight = (payload) => {
+export function filterCreated(payload) {
     return {
-      type: FILTER_BY_WEIGHT,
-      payload,
-    };
+        type: 'FILTER_CREATED',
+        payload
+    }
 }
 
-export const filterCreated = (payload) => {
-    return {
-      type: FILTER_CREATED,
-      payload,
-    };
+export function getDetails(id) {
+    return async function (dispatch) {
+        try {
+            var json = await axios.get(`http://localhost:3011/dogs/${id}`)
+            return dispatch({
+                type: 'GET_DETAILS',
+                payload: json.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export function deleteDetails() {
+    return async function (dispatch){
+    return dispatch({
+        type: 'DELETE_DETAILS'
+    })
+}
 }
