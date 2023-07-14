@@ -93,7 +93,7 @@ export function postDog(payload) {
 export function filterDogsByTemperament(payload) {
     return async function (dispatch) {
         try {
-            var json = await axios.get(`http://localhost:3011/dog/?temperaments=${payload}`);
+            var json = await axios.get(`http://localhost:3011/dogs/?temperaments=${payload}`);
             return dispatch({
                 type: 'GET_DOGS_BY_TEMP',
                 payload: json.data

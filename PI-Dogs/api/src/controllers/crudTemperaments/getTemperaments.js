@@ -4,26 +4,28 @@ const { API_KEY } = process.env;
 
 const getAllTemps = async () => {
     try {
-      let temperamentApi = new Set();
-
+     
       //busca a los temps de la api
       const consultaApi = await axios.get(
-        `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`
-      );
-      consultaApi.data.forEach((temp) => {
-        let resultTempArray = temp.temperament ? temp.temperament.split(", ") : [];
-        resultTempArray.forEach((temp) => temperamentApi.add(temp));
-      });
-      const temperamentApiResult = Array.from(temperamentApi);
+        `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
 
-      temperamentApiResult.forEach(async (temperament) => {
-        await Temperament.findOrCreate({ where: { name: temperament } });
-      });
-      const temperamentDb = await Temperament.findAll();
-      return temperamentDb;
+      let everyTemperament = consultaApi.data.map(dog => dog.temperament ? dog.temperament : "No info").map(dog => dog?.split(', '));
+        /* Set para hacer UNIQUE :: Stackoverflow */
+        let eachTemperament = [...new Set(everyTemperament.flat())];
+        eachTemperament.forEach(el => {
+            if (el) { // temperament : ,
+                Temperament.findOrCreate({
+                    where: { name: el }
+                });
+            }
+        });
+        eachTemperament = await Temperament.findAll();
+        return eachTemperament
     } catch (error) {
       console.log(error);
     }
   };
+
+//ACA PODRIA IR MAS PETICIONES A TEMPERAMENTS
 
 module.exports = getAllTemps;

@@ -10,21 +10,21 @@ const apiDogs = async() => {
                 id,
                 name,
                 image: image.url,
-                minWeight: weight.metric.slice(0, 2).replace(" ", ""),
-                maxWeight: weight.metric.slice(4).replace(" ", ""),
-                minHeight: height.metric.slice(0, 2).replace(" ", ""),
-                maxHeight: height.metric.slice(4).replace(" ", ""),
+                minWeight: +(weight.metric.slice(0, 2).trim()),
+                maxWeight: +(weight.metric.slice(4).trim()),
+                minHeight: +(height.metric.slice(0, 2).trim()) ,
+                maxHeight: +(height.metric.slice(4).trim()) ,
                 age: life_span,
-                temperament: temperament ? temperament.split(',').map((temp) => temp.trim()) : [],
+                temperament: temperament
             }
         })
         const dogDb = await Dog.findAll({
             include: [
               {
                 model: Temperament,
-                attributes: ["name"],
+                attributes: ["name"], //atributos a traer del modelo
                 through: {
-                  attributes: [],
+                  attributes: [], //medio por las que vendran
                 },
               },
             ],

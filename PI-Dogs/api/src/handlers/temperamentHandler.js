@@ -10,4 +10,16 @@ const handlerAllTemps = async(req, res) => {
     }
 }
 
-module.exports = {handlerAllTemps}
+const handlerSearchTemperaments = async(req,res) => {
+    const { temperament } = req.query;
+    const everyDog = await getAllDogs();
+    const dogSearchResult = everyDog.filter((dog) => {
+        if (temperament === 'all') return everyDog
+        else if (dog.temperament) {
+            return (dog.temperament.toLowerCase()).includes(temperament.toLowerCase())
+        }
+    });
+    res.status(200).json(dogSearchResult);
+}
+
+module.exports = {handlerAllTemps, handlerSearchTemperaments}
