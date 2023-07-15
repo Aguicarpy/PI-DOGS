@@ -3,6 +3,7 @@ import Logo from "../../../assets/favicon-32x32.png";
 import styles from "./NavBar.module.css";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import DogsForm from "../../Form/DogForm";
 
 export default function NavBar() {
   return (
@@ -27,9 +28,7 @@ export default function NavBar() {
           <SearchBar />
         </div>
       </div>
-        <div className={styles.aboutNavButton}>
-          <Link to="/about">About</Link>
-        </div>
+        
       </div>
     </Fragment>
   );

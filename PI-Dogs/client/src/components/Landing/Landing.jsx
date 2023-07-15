@@ -10,9 +10,6 @@ export default function LandingPage(){
                 <Link to='/home'>
                     <button className={styles.bubblyButton}>Let's Woof</button>
                 </Link>
-                <video autoPlay muted loop className={styles.video_bg}>
-                    <source src="../movie.mp4" type="video/mp4"/>
-                </video>
             </div>
         </Fragment>
     )

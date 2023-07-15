@@ -216,11 +216,13 @@ const DogsForm = () => {
           {/* Temperament */}
           <div>
             <select onChange={(e) => handleSelect(e)}>
-              {temperaments?.map((el, i) => (
-                <option value={`${el.id},${el.name}`} key={i}>
-                  {el.name}
-                </option>
-              ))}
+            {temperaments.map((temp) => {
+                  return (
+                    <option key={temp} name={temp}>
+                      {temp}
+                    </option>
+                  );
+                })}
             </select>
           </div>
         </div>

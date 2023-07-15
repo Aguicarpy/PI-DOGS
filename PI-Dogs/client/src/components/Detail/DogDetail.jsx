@@ -4,7 +4,6 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteDetails, getDetails } from "../../redux/actions";
 import styles from "./DogDetail.module.css";
-import tinyDog from "../../assets/dogi.jpg";
 import heart from "../../assets/heart.jpg";
 import scale from "../../assets/metric.png";
 import bone from "../../assets/bone.png";
@@ -25,7 +24,7 @@ export default function DogDetail() {
       {myDog ? (
         <div key={myDog.id} className={styles.bodix}>
           <div className={styles.mainContainer}>
-            <h2 className={styles.mainTitle}>{myDog.name}</h2>
+            <h2 className={styles.mainTitle}>{myDog.id} - {myDog.name}</h2>
             <img src={myDog.image} alt={myDog.name} className={styles.image} />
             <div className={styles.detailsContainer}>
               <div className={styles.life_span}>
