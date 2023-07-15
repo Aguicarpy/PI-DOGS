@@ -2,8 +2,8 @@ const initialState = {
     dogs: [],
     allDogs: [],
     temperaments: [],
-    breeds: [],
-    details:[]
+    details:{},
+    filteredDogs: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -24,24 +24,29 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 allDogs: action.payload,
             }
-        case 'GET_BREEDS':
-            return {
-                ...state,
-                breeds: action.payload
-            }
         case 'GET_TEMPERAMENTS_LIST':
             return {
                 ...state,
                 temperaments: action.payload
             }
-        case 'GET_DOGS_BY_BREED':
-            const allDogs = state.dogs
-            if (action.payload === 'all') return allDogs
-            return {
-                ...state,
-                allDogs: action.payload,
-                dogs: allDogs
-            }
+            case 'FILTER_DOGS_BY_TEMPERAMENT':
+                const selectedTemperament = action.payload;
+                const allDogs = state.dogs;
+          
+                if (selectedTemperament === 'all') {
+                  return {
+                    ...state,
+                    filteredDogs: allDogs, // Mostrar todos los perros
+                  };
+                } else {
+                  const filteredDogs = allDogs.filter((dog) =>
+                    dog.temperament && dog.temperament.includes(selectedTemperament)
+                  );
+                  return {
+                    ...state,
+                    filteredDogs, // Actualizar el estado con los perros filtrados
+                  };
+                }
         case 'FILTER_CREATED':
             const createdFilter = action.payload === 'created' ?
                 state.dogs.filter(el => el.createdInDB === true) :
@@ -69,15 +74,15 @@ function rootReducer(state = initialState, action) {
         case 'ORDER_BY_WEIGHT':
             const sortedWeight = action.payload === 'asc' ?
                 [...state.dogs].sort(function (a, b) {
-                    if(a.weight_min === null) { return 0 }
-                    if (a.weight_min < b.weight_min) { return 1 }
-                    if (b.weight_min < a.weight_min) { return -1 }
+                    if(a.minWeight === null) { return 0 }
+                    if (a.minWeight < b.minWeight) { return 1 }
+                    if (b.minWeight < a.minWeight) { return -1 }
                     return 0;
                 }) :
                 [...state.dogs].sort(function (a, b) {
-                    if(a.weight_min === null) { return 0 }
-                    if (a.weight_min < b.weight_min) { return -1; }
-                    if (b.weight_min < a.weight_min) { return 1; }
+                    if(a.minWeight === null) { return 0 }
+                    if (a.minWeight < b.minWeight) { return -1; }
+                    if (b.minWeight < a.minWeight) { return 1; }
                     return 0;
                 })
             return {
@@ -88,7 +93,7 @@ function rootReducer(state = initialState, action) {
             const everyDog = state.allDogs
             const weightMAXFiltered = action.payload === 'all' ?
                 everyDog :
-                everyDog.filter(el => el.weight_max <= action.payload)
+                everyDog.filter(el => el.maxWeight <= action.payload)
             return {
                 ...state,
                 allDogs: weightMAXFiltered
@@ -97,7 +102,7 @@ function rootReducer(state = initialState, action) {
             const allDoguis = state.allDogs
             const weightMINFiltered = action.payload === 'all' ?
                 allDoguis :
-                allDoguis.filter(el => el.weight_min >= action.payload)
+                allDoguis.filter(el => el.minWeight >= action.payload)
             return {
                 ...state,
                 allDogs: weightMINFiltered
@@ -114,7 +119,7 @@ function rootReducer(state = initialState, action) {
         case 'DELETE_DETAILS':
             return{
                 ...state,
-                details: []
+                details: {}
             }
         default:
             return state

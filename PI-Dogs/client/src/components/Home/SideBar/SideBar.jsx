@@ -7,12 +7,10 @@ import {
   filterDogsByTemperament,
   orderByName,
   filterCreated,
-  // getBreeds,
-  // getDogsByBreed,
   filterDogsByMAXWeight,
   filterDogsByMINWeight,
   orderByWeight
-} from "../../redux/actions";
+} from "../../../redux/actions";
 import styles from "./SideBar.module.css";
 
 export default function SideBar() {
@@ -23,7 +21,9 @@ export default function SideBar() {
       else return 1;
     }
   );
+  const filteredDogs = useSelector((state) => state.filteredDogs);
   const allDogs = useSelector((state) => state.allDogs);
+  const dogs = filteredDogs.length > 0 ? filteredDogs : allDogs;
   const breeds = useSelector((state) => state.breeds);
   
   const minWeights = allDogs
@@ -139,10 +139,10 @@ export default function SideBar() {
           <h5 className={styles.filterHeader}>Filter by temperament</h5>
           <select onChange={(e) => handleFilteredByTemp(e)}>
             <option value="all">All Temperaments</option>
-            {temperaments.map((temp) => {
-              return (
-                <option value={temp} key={temp}>
-                  {temp}
+            {temperaments.map((temperament) => {
+               return (
+                <option value={temperament} key={temperament}>
+                  {temperament}
                 </option>
               );
             })}

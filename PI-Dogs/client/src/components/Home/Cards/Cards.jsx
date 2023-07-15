@@ -43,6 +43,8 @@ export default function DogArea() {
             image={el.image}
             temperament={el.temperament}
             temperaments={el.temperaments}
+            minWeight={el.minWeight}
+            maxWeight={el.maxWeight}
           />
         )})}
       </div>

@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Card.module.css";
-export default function DogCard( { id, name, image, temperament, temperaments } ) {
+export default function DogCard( { id, name, image, temperament, temperaments, maxWeight, minWeight } ) {
   if (!temperaments) {
     return (
       <Fragment>
@@ -9,15 +9,20 @@ export default function DogCard( { id, name, image, temperament, temperaments } 
           <Link to={"/dogs/" + id}>
             <div className={styles.titleArea}>
               <h4 className={styles.dogName}>{name}</h4>
+              <h5 className={styles.dogName}>{minWeight} - {maxWeight} kg</h5>
             </div>
             <div className={styles.infoArea}>
+              {/* <div>
+                    <h5>{minWeight} - {maxWeight} kg</h5>
+              </div> */}
               <div className={styles.tempArea}>
                 {temperament ? (
-                  <h5 className={styles.dogTemp}>{temperament}</h5>
-                ) : (
-                  <br />
-                )}
+                  <h5 className={styles.dogTemp}>{temperament}</h5> 
+                  ) : (
+                    <br />
+                    )}
               </div>
+            
               <div className={styles.imageArea}>
                 <img
                   className={styles.dogImage}

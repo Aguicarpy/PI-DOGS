@@ -1,23 +1,24 @@
 import React, { Fragment, useEffect } from "react";
+import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteDetails, getDetails } from "../../redux/actions";
 import styles from "./DogDetail.module.css";
-// import tinyDog from "../../assets/dog.svg";
-// import heart from "../../assets/heart.svg";
-// import scale from "../../assets/scale.svg";
-// import bone from "../../assets/bones.svg";
+import tinyDog from "../../assets/dogi.jpg";
+import heart from "../../assets/heart.jpg";
+import scale from "../../assets/metric.png";
+import bone from "../../assets/bone.png";
 
-export default function DogDetail(id) {
+export default function DogDetail() {
   const dispatch = useDispatch();
-//   const {id} = useParams
+  const myDog = useSelector((state) => state.details);
+  const {id} = useParams()
   
   useEffect(() => {
-    dispatch(getDetails(id));
+    dispatch(getDetails(id))
     return () => dispatch(deleteDetails());
   }, [dispatch,id]);
 
-  const myDog = useSelector((state) => state.details);
 
   return (
     <Fragment>
@@ -27,62 +28,45 @@ export default function DogDetail(id) {
             <h2 className={styles.mainTitle}>{myDog.name}</h2>
             <img src={myDog.image} alt={myDog.name} className={styles.image} />
             <div className={styles.detailsContainer}>
-              {myDog.breed_group ? (
-                <div className={styles.breed_group}>
-                  <div className={styles.imageSection}>
-                    <img
-                    //   src={tinyDog}
-                      alt="a tiny svg dog"
-                      className={styles.detailsSVG}
-                    />
-                  </div>
-                  <div className={styles.infoSection}>
-                    <h3>Breed group: </h3>
-                    <p>{myDog.breed_group}</p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
               <div className={styles.life_span}>
                 <div className={styles.imageSection}>
                   <img
-                    // src={heart}
+                    src={heart}
                     alt="a tiny svg dog"
                     className={styles.detailsSVG}
                   />
                 </div>
                 <div className={styles.infoSection}>
-                  <h3>Life span: </h3>
-                  <p>{myDog.life_span}</p>
+                  <h3>Age: </h3>
+                  <p>{myDog.age}</p>
                 </div>
               </div>
               <div className={styles.weights}>
                 <div className={styles.imageSection}>
                   <img
-                    // src={scale}
+                    src={scale}
                     alt="a tiny svg dog"
                     className={styles.detailsSVG}
                   />
                 </div>
                 <div className={styles.infoSection}>
                   <h3>Weight: </h3>
-                  <p>Min: {myDog.weight_min}</p>
-                  <p>Max: {myDog.weight_max}</p>
+                  <p>Min: {myDog.minWeight}</p>
+                  <p>Max: {myDog.maxWeight}</p>
                 </div>
               </div>
               <div className={styles.heights}>
                 <div className={styles.imageSection}>
                   <img
-                    // src={bone}
+                    src={bone}
                     alt="a tiny svg bone"
                     className={styles.detailsSVG}
                   />
                 </div>
                 <div className={styles.infoSection}>
                   <h3>Height: </h3>
-                  <p>Min: {myDog.height_min}</p>
-                  <p>Max: {myDog.height_max}</p>
+                  <p>Min: {myDog.minHeight}</p>
+                  <p>Max: {myDog.maxHeight}</p>
                 </div>
               </div>
               <br />

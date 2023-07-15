@@ -10,7 +10,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     background-color: rgb(1, 53, 5);
     box-shadow: 6px 7px 8px -6px rgba(69, 69, 69, 0.7);
@@ -21,12 +21,12 @@
   .mainTitle {
     text-align: center;
     margin: 10px;
-    font-size: 45px;
+    font-size: 25px;
   }
   
   .image {
     border-radius: 15px;
-    height: 350px;
+    height: 200px;
     border: 3px white solid;
     box-shadow: 6px 7px 8px -6px rgba(255, 245, 245, 0.7);
   }
@@ -40,17 +40,9 @@
     background-color: rgba(255, 255, 255, 0.192);
     padding: 8px;
     border-radius: 15px;
-    max-width: 80%;
-    min-height: 25%;
+    max-width: 60%;
+    min-height: 50%;
     margin: 10px;
-  }
-  
-  .breed_group {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: left;
-    width: 50%;
   }
   
   .temperament {
@@ -87,7 +79,7 @@
   }
   
   .detailsSVG {
-    width: 100px;
+    width: 80px;
     background-color: rgb(3, 59, 8);
     padding: 15px;
     border-radius: 15px;
