@@ -1,5 +1,5 @@
 const getAllTemps = require('../controllers/crudTemperaments/getTemperaments')
-
+const apiDogs= require('../controllers/dataDogs/apiDogs')
 
 const handlerAllTemps = async(req, res) => {
     try {
@@ -12,7 +12,7 @@ const handlerAllTemps = async(req, res) => {
 
 const handlerSearchTemperaments = async(req,res) => {
     const { temperament } = req.query;
-    const everyDog = await getAllDogs();
+    const everyDog = await apiDogs();
     const dogSearchResult = everyDog.filter((dog) => {
         if (temperament === 'all') return everyDog
         else if (dog.temperament) {
