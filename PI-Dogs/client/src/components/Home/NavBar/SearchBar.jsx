@@ -12,7 +12,7 @@ export default function SearchBar() {
     e.preventDefault();
     
     if (dogState.length === 0) {
-      dispatch(getDogs()).then((allDogs) => setAllDogs(allDogs));
+      dispatch(getDogs()).then(() => setAllDogs(allDogs));
     } else {
       dispatch(getDogsByName(dogState))
       // setDogsState("");
@@ -22,7 +22,7 @@ export default function SearchBar() {
     setDogsState(e.target.value);
 
     if (e.target.value.length === 0) {
-      dispatch(getDogs()).then((allDogs) => setAllDogs(allDogs)); // Actualizar el estado allDogs con todos los perros
+      dispatch(getDogs()).then(() => setAllDogs(allDogs)); // Actualizar el estado allDogs con todos los perros
     }
   }
 
@@ -30,13 +30,13 @@ export default function SearchBar() {
     <div className={styles.searchBarObject}>
       <input
         type="text"
-        placeholder="Search a dog..."
+        placeholder="Buscar un perro..."
         className={styles.input}
         value={dogState}
         onChange={handleInputChange}
       />
       <button type="submit" onClick={handleClick}>
-        <span className="material-icons">search</span>
+        <span className="material-icons">Buscar</span>
       </button>
     </div>
   );

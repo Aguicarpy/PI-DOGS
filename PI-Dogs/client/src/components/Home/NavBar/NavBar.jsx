@@ -3,7 +3,6 @@ import Logo from "../../../assets/favicon-32x32.png";
 import styles from "./NavBar.module.css";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import DogsForm from "../../Form/DogForm";
 
 export default function NavBar() {
   return (
@@ -20,8 +19,8 @@ export default function NavBar() {
             />
           </Link>
           <div>
-            <h1>Woof</h1>
-            <p>The dog's page</p>
+            <h1>🐶 Woof Woof 🐶</h1>
+            <p>WikiDogs</p>
           </div>
         </div>
         <div>

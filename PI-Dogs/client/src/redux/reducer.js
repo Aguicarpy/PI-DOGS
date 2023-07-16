@@ -2,6 +2,7 @@ const initialState = {
   dogs: [],
   allDogs: [],
   temperaments: [],
+  breeds: [],
   details: {},
   filteredDogs: [],
 };
@@ -29,11 +30,20 @@ function rootReducer(state = initialState, action) {
         ...state,
         temperaments: action.payload,
       };
-      case 'GET_DOGS_BY_TEMP':
-        return {
-            ...state,
-            allDogs: action.payload,
-        }
+    case "GET_BREEDS":
+      return {
+        ...state,
+        breeds: action.payload,
+      };
+
+    case "GET_DOGS_BY_BREED":
+      const allDogs = state.dogs;
+      if (action.payload === "all") return allDogs;
+      return {
+        ...state,
+        allDogs: action.payload,
+        dogs: allDogs,
+      };
     case "FILTER_CREATED":
       const createdFilter =
         action.payload === "created"
@@ -119,11 +129,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         allDogs: weightMINFiltered,
       };
-      case "SET_FILTERED_DOGS":
-        return {
-          ...state,
-          filteredDogs: action.payload,
-        };  
+    case "SET_FILTERED_DOGS":
+      return {
+        ...state,
+        filteredDogs: action.payload,
+      };
     case "POST_DOG":
       return {
         ...state,
