@@ -6,8 +6,7 @@ const getAllTemps = async () => {
     try {
      
       //busca a los temps de la api
-      const consultaApi = await axios.get(
-        `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
+      const consultaApi = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
 
       let everyTemperament = consultaApi.data.map(dog => dog.temperament ? dog.temperament : "No info").map(dog => dog?.split(', '));
         /* Set para hacer UNIQUE :: Stackoverflow */

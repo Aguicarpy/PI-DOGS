@@ -9,16 +9,17 @@ const handlerAllDogs = async(req, res) => {
     try {
         const { name } = req.query;
         // Llama a la funcion GetAllDogs que trae todos los perros
-        const {all_Dogs}  = await getAllDogs();
+        const all_Dogs  = await getAllDogs();
     
         if (name) {
           let nameDog = await getDogName(name);
-          return nameDog.length > 0 ? res.json(nameDog) : res.status(404).send(`Dog not found`);
+          return nameDog.length > 0 ? res.json(nameDog) : res.status(404).send(`Perro no encontrado`);
         } else {
           return res.json(all_Dogs);
         }
       } catch (error) {
-        return res.status(500).json({ error: error.message });
+        console.error(error);
+        res.status(500).json({ error: 'Ocurrió un error en el servidor' });
       }
 }
 
@@ -28,29 +29,29 @@ const handlerIdDog = async(req, res) => {
        
         if (id) {
             let dogId = await getDogId(id)
-            return dogId ? res.json(dogId) : res.status(404).json('Dog by id not found')
+            return dogId ? res.json(dogId) : res.status(404).send(`Perro con ${id} no encontrado`)
         }
       } catch (error) {
-        return res.status(500).json({ error: error.message });
+        console.error(error);
+        res.status(500).json({ error: 'Ocurrió un error en el servidor' });
       }
 }
 
 const handlerCreateDog = async(req, res) => {
     const { name, image, maxHeight, minHeight, minWeight, maxWeight, age, temperaments } = req.body;
     if (!name || !maxHeight || !minHeight || !minWeight || !maxWeight) {
-        return res.status(400).send(`Ingrese los campos`);
+        return res.status(400).send(`Ingrese datos en los campos`);
     }
     try {
-      const newDog = await postDog(name, image, maxHeight, minHeight, minWeight, maxWeight, age,temperaments);
-
+      const newDog = await postDog(name, image, maxHeight, minHeight, minWeight, maxWeight, age, temperaments);
         if(name){
             return newDog ? res.json(newDog) : res.status(404).send('Coloque nombre del perro')
         }
     } catch (error) {
-        res.status(404).json({ error: error.message });
+      console.error(error);
+      res.status(500).json({ error: 'Ocurrió un error en el servidor' });
     }
 };
-
 
 
 module.exports = {handlerAllDogs, handlerIdDog, handlerCreateDog}

@@ -1,4 +1,4 @@
-const {Dog,Temperament}  = require("../../db");
+const { Dog, Temperament } = require("../../db");
 
 //-- Get desde la bdd
 const dbDogs = async () => {
