@@ -3,13 +3,14 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteDetails, getDetails } from "../../redux/actions";
 import styles from "./DogDetail.module.css";
-import heart from "../../assets/heart.jpg";
-import scale from "../../assets/metric.png";
-import bone from "../../assets/bone.png";
+// import tinyDog from "../../assets/dog.svg";
+// import heart from "../../assets/heart.svg";
+// import scale from "../../assets/scale.svg";
+// import bone from "../../assets/bones.svg";
 
 export default function DogDetail() {
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const {id} = useParams()
 
   useEffect(() => {
     dispatch(getDetails(id));
@@ -17,59 +18,71 @@ export default function DogDetail() {
   }, [dispatch, id]);
 
   const myDog = useSelector((state) => state.details);
-  const temperaments = useSelector((state) => state.temperaments);
-  // console.log(temperaments);
-  console.log(myDog.temperament);
 
   return (
     <Fragment>
       {myDog ? (
         <div key={myDog.id} className={styles.bodix}>
           <div className={styles.mainContainer}>
-            <h2 className={styles.mainTitle}>
-              {myDog.id} - {myDog.name}
-            </h2>
+            <h2 className={styles.mainTitle}>{myDog.name}</h2>
             <img src={myDog.image} alt={myDog.name} className={styles.image} />
             <div className={styles.detailsContainer}>
+              {myDog.breed_group ? (
+                <div className={styles.breed_group}>
+                  <div className={styles.imageSection}>
+                    <img
+                      // src={tinyDog}
+                      alt="a tiny svg dog"
+                      className={styles.detailsSVG}
+                    />
+                  </div>
+                  <div className={styles.infoSection}>
+                    <h3>Breed group: </h3>
+                    <p>{myDog.breed_group}</p>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
               <div className={styles.life_span}>
                 <div className={styles.imageSection}>
                   <img
-                    src={heart}
+                    // src={heart}
                     alt="a tiny svg dog"
                     className={styles.detailsSVG}
                   />
                 </div>
                 <div className={styles.infoSection}>
-                  <h3>Age: </h3>
-                  <p>{myDog.age}</p>
+                  <h3>Life span: </h3>
+                  <p>{myDog.life_span}</p>
                 </div>
               </div>
               <div className={styles.weights}>
                 <div className={styles.imageSection}>
                   <img
-                    src={scale}
+                    // src={scale}
                     alt="a tiny svg dog"
                     className={styles.detailsSVG}
                   />
                 </div>
                 <div className={styles.infoSection}>
                   <h3>Weight: </h3>
-                  <p>Min: {myDog.minWeight}</p>
-                  <p>Max: {myDog.maxWeight}</p>
+                  <p>Min: {myDog.weight_min}</p>
+                  <p>Max: {myDog.weight_max}</p>
                 </div>
               </div>
               <div className={styles.heights}>
                 <div className={styles.imageSection}>
                   <img
-                    src={bone}
+                    // src={bone}
                     alt="a tiny svg bone"
                     className={styles.detailsSVG}
                   />
                 </div>
                 <div className={styles.infoSection}>
                   <h3>Height: </h3>
-                  <p>Min: {myDog.minHeight}</p>
-                  <p>Max: {myDog.maxHeight}</p>
+                  <p>Min: {myDog.height_min}</p>
+                  <p>Max: {myDog.height_max}</p>
                 </div>
               </div>
               <br />
@@ -79,8 +92,8 @@ export default function DogDetail() {
                     <div>
                       <h3>Temperament: </h3>
                       <p>
-                      {myDog.dataBaseDog
-                          ? temperaments.map((el) => {return el}).join(", ")
+                        {myDog.createdInDB
+                          ? myDog.temperaments.map((el) => el.name).join(", ")
                           : myDog.temperament}
                       </p>
                     </div>
