@@ -8,23 +8,20 @@ import s from "../Form/DogForm.module.css";
 const DogsForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const temperaments = useSelector((state) => state.temperaments);
-  const [errors, setErrors] = useState("");
+  const temperament = useSelector((state) => state.temperaments)
+  const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     name: "",
-    life_span: "",
+    age: "",
     image: "",
-    temperament: [],
     minWeight: "",
     maxWeight: "",
     minHeight: "",
     maxHeight: "",
+    temperament: [],
   });
 
-  useEffect(() => {
-    dispatch(getTemperamentsList());
-  }, [dispatch]);
-
+  
   function handleChange(event) {
     setInput({
       ...input,
@@ -39,241 +36,176 @@ const DogsForm = () => {
   }
 
   function handleSelect(event) {
-    if (input.temperament.find((t) => t.id === event.target.value.split(",")[0])) {
-      console.log({ input });
-      alert("Already in the list");
-    } else {
-      setInput({
-        ...input,
-        temperament: [
-          ...input.temperament,
-          {
-            id: event.target.value.split(",")[0],
-            name: event.target.value.split(",")[1],
-          },
-        ],
-      });
-    }
-  }
-
-  const handleDelete = (event) => {
     setInput({
       ...input,
-      temperament: input.temperament.filter((el) => el !== event),
+      temperament: [...input.temperament, event.target.value],
+    });
+  }
+
+  const handleDelete = (el) => {
+    setInput({
+      ...input,
+      temperament: input.temperament.filter((temp) => temp !== el),
     });
   };
-
+  
   function handleSubmit(event) {
-    if (
-      input.name && !parseInt(input.name) &&input.life_span &&input.minWeight &&input.maxWeight &&input.minHeight 
-      && input.maxHeight &&input.image &&input.temperament &&input.temperament.length > 0) {
-      event.preventDefault();
-      dispatch(
-        postDog({
-          name: input.name,
-          life_span: input.life_span,
-          image: input.image,
-          maxHeight: input.maxHeight,
-          minHeight: input.minHeight,
-          maxWeight: input.maxWeight,
-          minWeight: input.minWeight,
-          temperaments: input.temperament.map((t) => +(t.id)),
-        })
-      );
-
-      alert("Perro creado con exito");
+    event.preventDefault();
+    if (!errors.name && !errors.image && !errors.minWeight && !errors.minHeight && !errors.maxWeight && !errors.maxHeight) {
+      alert("Your dog has been created successfully");
+      dispatch(postDog(input));
       setInput({
         name: "",
-        life_span: "",
+        image:"",
         minWeight: "",
         maxWeight: "",
         minHeight: "",
         maxHeight: "",
-        image: "",
+        age: "",
         temperament: [],
       });
-      history.push("/home");
     } else {
-      alert("Información incompleta");
-      event.preventDefault();
+      return alert("Something went wrong. Please try again.");
     }
+    history.push("/home");
   }
 
+  useEffect(() => {
+    dispatch(getTemperamentsList());
+  }, [dispatch]);
+  
   return (
-    <div className={s.container}>
-      <div className={s.back}>
-        <Link to="/home">Ir a la página principal</Link>
-        <p className={s.return}>Return</p>
-      </div>
-      <h2 className={s.title}>Crear nueva raza</h2>
-      <form
-        className={s.form}
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
-      >
-        {/* Titles */}
-        <div className={s.titles}>
-          <label>Raza: </label>
-          <label>Año: </label>
-          <label>Altura (Cm): </label>
-          <label>Peso (Kg): </label>
-          <label>Imagen: </label>
-          <label>Temperamento: </label>
+    <>
+      <div className={s.mainContainerCreation}>
+        <div>
+          <h2>Create your Woof</h2>
         </div>
-
-        {/* Inputs */}
-        <div className={s.inputs}>
-          {/* BreedName */}
-          <div style={{ width: "352px" }}>
-            <input
-              style={{ width: "352px" }}
-              type="text"
-              placeholder="Nombre de raza"
-              value={input.name}
-              name="name"
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <br />
-          {/* life_span */}
-          <div style={{ width: "352px" }}>
-            <input
-              style={{ width: "352px" }}
-              type="number"
-              placeholder="Edad"
-              value={input.life_span}
-              name="life_span"
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <br />
-          <div className={s.heightDiv}>
-            {/* MaxHeight */}
-            <div>
+        <div className={s.formContainer}>
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <div className={s.Section}>
+              <label>Name:</label>
               <input
-                type="number"
-                min="0"
-                placeholder="Altura máxima"
-                value={input.maxHeight}
-                name="maxHeight"
+                type="text"
+                value={input.name}
+                name="name"
+                placeholder="Grand Canadian Bulldog"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+              <div>
+                <p className={s.error}>{errors.name}</p>
+              </div>
+            </div>
+            <div className={s.Section}>
+              <label>Image URL:</label>
+              <input
+                type="url"
+                value={input.image}
+                name="image"
+                placeholder="http://myimageontheweb.com"
                 onChange={(e) => handleChange(e)}
               />
+              <div>
+                <p className={s.error}>{errors.image}</p>
+              </div>
             </div>
-            {/* MinHeight */}
-            <div>
+            <div className={s.Section}>
+              <h4>Heights</h4>
+              <label>Min</label>
               <input
                 type="number"
-                min="0"
-                placeholder="Altura minima"
                 value={input.minHeight}
                 name="minHeight"
+                placeholder="20"
                 onChange={(e) => handleChange(e)}
-                style={{ marginLeft: "10px" }}
+                required
               />
-            </div>
-          </div>
-          <br />
-          <div className={s.weightDiv}>
-            {/* MaxWeight */}
-            <div>
+              <div>
+                <p className={s.error}>{errors.minHeight}</p>
+              </div>
+              <label>Max</label>
               <input
                 type="number"
-                min="0"
-                placeholder="Peso máximo"
-                value={input.maxWeight}
-                name="maxWeight"
+                value={input.maxHeight}
+                name="maxHeight"
+                placeholder="50"
                 onChange={(e) => handleChange(e)}
+                required
               />
+              <div>
+                <p className={s.error}>{errors.maxHeight}</p>
+              </div>
             </div>
-            <br />
-            {/* MinWeight */}
-            <div>
+            <div className={s.Section}>
+              <h4>Weights</h4>
+              <label>Min</label>
               <input
                 type="number"
-                min="0"
-                placeholder="Peso minimo"
                 value={input.minWeight}
                 name="minWeight"
+                placeholder="15"
                 onChange={(e) => handleChange(e)}
-                style={{ marginLeft: "10px" }}
+                required
+              />
+              <div>
+                <p className={s.error}>{errors.minWeight}</p>
+              </div>
+              <label>Max</label>
+              <input
+                type="number"
+                value={input.maxWeight}
+                name="maxWeight"
+                placeholder="32"
+                onChange={(e) => handleChange(e)}
+                required
+              />
+              <div>
+                <p className={s.error}>{errors.maxWeight}</p>
+              </div>
+            </div>
+            <div className={s.Section}>
+              <label>Life Span</label>
+              <input
+                type="text"
+                value={input.age}
+                name="age"
+                placeholder="12 - 15 years"
+                onChange={(e) => handleChange(e)}
               />
             </div>
-          </div>
-          <br />
-          {/* Image */}
-          <div style={{ width: "352px" }}>
-            <input
-              style={{ width: "352px" }}
-              type="URL"
-              placeholder="URL de la imagen"
-              value={input.image}
-              name="image"
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <br />
-          {/* Temperament */}
-          <div>
-            <select onChange={(e) => handleSelect(e)}>
-            {temperaments.map((temp) => {
+            <div className={s.Section}>
+              <label>Temperaments</label>
+              <select onChange={(e) => handleSelect(e)} className={s.styled_select}>
+                {temperament.map((temp) => {
                   return (
                     <option key={temp} name={temp}>
                       {temp}
                     </option>
                   );
                 })}
-            </select>
-          </div>
+              </select>
+              <div className={s.sidebar_box}>
+                <h4>You have selected that:</h4>
+                {input.temperament.map((el) => (
+                  <div key={el} className={s.selectedItems}>
+                    <p>{el}</p>
+                    <button onClick={() => handleDelete(el)}>x</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className={s.buttonSection}>
+              <Link to="/home">
+                <button className={s.buttonCancel}>Cancel</button>
+              </Link>
+              <button className={s.button} type="submit">
+                Creat 🐕
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
-
-      <div>
-        {input.temperament.map((el, i) => (
-          <button
-            className={s.buttonTemperament}
-            key={i}
-            type="reset"
-            onClick={() => handleDelete(el)}
-          >
-            {el.name} X
-          </button>
-        ))}
-        {errors.temperament && <p className="error">{errors.temperament}</p>}
       </div>
-
-      <div className={s.submit}>
-        <button
-          className={s.buttonSubmit}
-          type="submit"
-          onClick={(e) => handleSubmit(e)}
-        >
-          Crear raza
-        </button>
-      </div>
-      {/*Errors */}
-      <div className={s.errors}>
-        <ul>
-          {errors.name && <li className="error">{errors.name}</li>}
-
-          {errors.life_span && <li className="error">{errors.life_span}</li>}
-
-          {(errors.weight && <li className="error">{errors.weight}</li>) ||
-            (errors.maxWeight && (
-              <li className="error">*{errors.maxWeight}</li>
-            )) ||
-            (errors.minWeight && <li className="error">{errors.minWeight}</li>)}
-
-          {(errors.height && <li className="error">{errors.height}</li>) ||
-            (errors.maxHeight && (
-              <li className="error">{errors.maxHeight}</li>
-            )) ||
-            (errors.minHeight && <li className="error">{errors.minHeight}</li>)}
-
-          {errors.image && <li className="error">{errors.image}</li>}
-        </ul>
-      </div>
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect } from "react";
-import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteDetails, getDetails } from "../../redux/actions";
@@ -10,21 +9,26 @@ import bone from "../../assets/bone.png";
 
 export default function DogDetail() {
   const dispatch = useDispatch();
-  const myDog = useSelector((state) => state.details);
-  const {id} = useParams()
-  
-  useEffect(() => {
-    dispatch(getDetails(id))
-    return () => dispatch(deleteDetails());
-  }, [dispatch,id]);
+  const { id } = useParams();
 
+  useEffect(() => {
+    dispatch(getDetails(id));
+    return () => dispatch(deleteDetails());
+  }, [dispatch, id]);
+
+  const myDog = useSelector((state) => state.details);
+  const temperaments = useSelector((state) => state.temperaments);
+  // console.log(temperaments);
+  console.log(myDog.temperament);
 
   return (
     <Fragment>
       {myDog ? (
         <div key={myDog.id} className={styles.bodix}>
           <div className={styles.mainContainer}>
-            <h2 className={styles.mainTitle}>{myDog.id} - {myDog.name}</h2>
+            <h2 className={styles.mainTitle}>
+              {myDog.id} - {myDog.name}
+            </h2>
             <img src={myDog.image} alt={myDog.name} className={styles.image} />
             <div className={styles.detailsContainer}>
               <div className={styles.life_span}>
@@ -75,8 +79,8 @@ export default function DogDetail() {
                     <div>
                       <h3>Temperament: </h3>
                       <p>
-                        {myDog.createdInDB
-                          ? myDog.temperaments.map((el) => el.name).join(", ")
+                      {myDog.dataBaseDog
+                          ? temperaments.map((el) => {return el}).join(", ")
                           : myDog.temperament}
                       </p>
                     </div>

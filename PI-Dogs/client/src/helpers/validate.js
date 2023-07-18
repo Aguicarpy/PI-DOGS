@@ -21,9 +21,9 @@ const validate = (input) => {
       errors.name = "No se permiten caracteres especiales";
     }
   
-    if (!input.life_span) {
-      errors.life_span = "Por favor, ingrese edad del perro";
-    } else if (input.life_span > 20 || input.life_span < 1) {
+    if (!input.age) {
+      errors.age = "Por favor, ingrese edad del perro";
+    } else if (input.age > 20 || input.age < 1) {
       errors.life_span = " life span must be in a number from 1 - 20";
     }
   

@@ -12,9 +12,6 @@ export default function DogCard( { id, name, image, temperament, temperaments, m
               <h5 className={styles.dogName}>{minWeight} - {maxWeight} kg</h5>
             </div>
             <div className={styles.infoArea}>
-              {/* <div>
-                    <h5>{minWeight} - {maxWeight} kg</h5>
-              </div> */}
               <div className={styles.tempArea}>
                 {temperament ? (
                   <h5 className={styles.dogTemp}>{temperament}</h5> 
@@ -22,7 +19,6 @@ export default function DogCard( { id, name, image, temperament, temperaments, m
                     <br />
                     )}
               </div>
-            
               <div className={styles.imageArea}>
                 <img
                   className={styles.dogImage}

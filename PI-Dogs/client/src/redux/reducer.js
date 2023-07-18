@@ -3,8 +3,7 @@ const initialState = {
   allDogs: [],
   temperaments: [],
   breeds: [],
-  details: {},
-  filteredDogs: [],
+  details: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -30,25 +29,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         temperaments: action.payload,
       };
-    case "GET_BREEDS":
-      return {
-        ...state,
-        breeds: action.payload,
-      };
-
-    case "GET_DOGS_BY_BREED":
-      const allDogs = state.dogs;
-      if (action.payload === "all") return allDogs;
-      return {
-        ...state,
-        allDogs: action.payload,
-        dogs: allDogs,
-      };
+   
     case "FILTER_CREATED":
       const createdFilter =
         action.payload === "created"
-          ? state.dogs.filter((el) => el.createdInDB === true)
-          : state.dogs.filter((el) => !el.createdInDB);
+          ? state.dogs.filter((el) => el.dataBaseDog === true)
+          : state.dogs.filter((el) => !el.dataBaseDog);
       return {
         ...state,
         allDogs: createdFilter,
@@ -129,11 +115,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         allDogs: weightMINFiltered,
       };
-    case "SET_FILTERED_DOGS":
-      return {
-        ...state,
-        filteredDogs: action.payload,
-      };
     case "POST_DOG":
       return {
         ...state,
@@ -146,7 +127,7 @@ function rootReducer(state = initialState, action) {
     case "DELETE_DETAILS":
       return {
         ...state,
-        details: {},
+        details: [],
       };
     default:
       return state;
