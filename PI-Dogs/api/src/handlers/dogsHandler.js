@@ -38,20 +38,39 @@ const handlerIdDog = async(req, res) => {
 }
 
 const handlerCreateDog = async(req, res) => {
-    const { name, image, maxHeight, minHeight, minWeight, maxWeight, age, temperaments } = req.body;
-    if (!name || !maxHeight || !minHeight || !minWeight || !maxWeight) {
-        return res.status(400).send(`Ingrese datos en los campos`);
-    }
+   // takes these properties to build the new dog
+  const { name,maxHeight,minHeight,minWeight,maxWeight,age,temperament,image} = req.body;
+
+if(!image){
     try {
-      const newDog = await postDog(name, image, maxHeight, minHeight, minWeight, maxWeight, age, temperaments);
-        if(name){
-            return newDog ? res.json(newDog) : res.status(404).send('Coloque nombre del perro')
-        }
+        image = await (await axios.get('https://dog.ceo/api/breeds/image/random')).data.message;
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Ocurrió un error en el servidor' });
+        console.log(error)
     }
-};
+}
+
+if (name && minHeight && maxHeight && minWeight && maxWeight && temperament && image) {
+    // takes that data for the new dog  
+    const createDog = await Dog.create({
+        name: name,
+        minHeight: parseInt(minHeight),
+        maxHeight: parseInt(maxHeight),
+        minWeight: parseInt(minWeight),
+        maxWeight: parseInt(maxWeight),
+        age: age,
+        image: image,
+    });
+    temperament.map(async el => {
+        const findTemp = await Temperament.findAll({
+            where: { name: el }
+        });
+        createDog.addTemperaments(findTemp);
+      })
+    res.status(200).send(createDog);
+} else {
+    res.status(404).send('Data needed to proceed is missing');
+}
+}
 
 
 module.exports = {handlerAllDogs, handlerIdDog, handlerCreateDog}

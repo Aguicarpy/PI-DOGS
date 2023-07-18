@@ -6,6 +6,6 @@ const routerTemp = require('./temperamentsRoutes')
 
 
 routes.use('/dogs', routerDog)
-routes.use('/temperaments', routerTemp)
+routes.use('/temperament', routerTemp)
 
 module.exports = routes;
