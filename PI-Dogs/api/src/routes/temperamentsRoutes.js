@@ -1,8 +1,9 @@
 const {Router} = require('express');
 const routerTemp = Router();
-const {handlerAllTemps, handlerSearchTemperaments} = require('../handlers/temperamentHandler')
+const {handlerAllTemps, handlerSearchTemperaments, handlerPostDog} = require('../handlers/temperamentHandler')
 
 routerTemp.get('/', handlerAllTemps) //trae todos los temperamentos //OK
 routerTemp.get('/dog', handlerSearchTemperaments)
+routerTemp.post('/:temperament', handlerPostDog)
 
 module.exports = routerTemp;

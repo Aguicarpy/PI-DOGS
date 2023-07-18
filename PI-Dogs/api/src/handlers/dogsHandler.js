@@ -38,8 +38,8 @@ const handlerIdDog = async(req, res) => {
 }
 
 const handlerCreateDog = async(req, res) => {
-   // takes these properties to build the new dog
-  const { name,maxHeight,minHeight,minWeight,maxWeight,age,temperament,image} = req.body;
+  // takes these properties to build the new dog
+  let { name,height_min,height_max,weight_min,weight_max,life_span,temperament,image} = req.body;
 
 if(!image){
     try {
@@ -49,23 +49,23 @@ if(!image){
     }
 }
 
-if (name && minHeight && maxHeight && minWeight && maxWeight && temperament && image) {
+if (name && height_min && height_max && weight_min && weight_max && temperament && image) {
     // takes that data for the new dog  
     const createDog = await Dog.create({
         name: name,
-        minHeight: parseInt(minHeight),
-        maxHeight: parseInt(maxHeight),
-        minWeight: parseInt(minWeight),
-        maxWeight: parseInt(maxWeight),
-        age: age,
-        image: image,
+        height_min: parseInt(height_min),
+        height_max: parseInt(height_max),
+        weight_min: parseInt(weight_min),
+        weight_max: parseInt(weight_max),
+        life_span: life_span,
+        image: image || 'https://dog.ceo/api/breeds/image/random',
     });
     temperament.map(async el => {
         const findTemp = await Temperament.findAll({
             where: { name: el }
         });
-        createDog.addTemperaments(findTemp);
-      })
+        createDog.addTemperament(findTemp);
+    })
     res.status(200).send(createDog);
 } else {
     res.status(404).send('Data needed to proceed is missing');
