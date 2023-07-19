@@ -6,7 +6,7 @@ import NavBar from "../../components/Home/NavBar/NavBar";
 import styles from '../Home/Home.module.css'
 
 
-export default function Home() {
+const Home = () => {
   return (
     <Fragment>
       <div className={styles.mainContainer}>
@@ -17,3 +17,5 @@ export default function Home() {
     </Fragment>
   );
 }
+
+export default Home;

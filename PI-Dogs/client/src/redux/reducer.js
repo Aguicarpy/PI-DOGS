@@ -2,7 +2,6 @@ const initialState = {
   dogs: [],
   allDogs: [],
   temperaments: [],
-  breeds: [],
   details:[]
 }
 
@@ -24,23 +23,10 @@ function rootReducer(state = initialState, action) {
               ...state,
               allDogs: action.payload,
           }
-      case 'GET_BREEDS':
-          return {
-              ...state,
-              breeds: action.payload
-          }
       case 'GET_TEMPERAMENTS_LIST':
           return {
               ...state,
               temperaments: action.payload
-          }
-      case 'GET_DOGS_BY_BREED':
-          const allDogs = state.dogs
-          if (action.payload === 'all') return allDogs
-          return {
-              ...state,
-              allDogs: action.payload,
-              dogs: allDogs
           }
       case 'FILTER_CREATED':
           const createdFilter = action.payload === 'created' ?

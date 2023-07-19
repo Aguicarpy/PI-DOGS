@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom"
 import Landing from "../../components/Landing/Landing"
-// import style from '../views/Landing.module.css'
 
 const LandingPage = () => {
     return(
@@ -10,4 +8,4 @@ const LandingPage = () => {
     )
 }
 
-export default LandingPage
+export default LandingPage;

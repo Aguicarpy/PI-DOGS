@@ -40,12 +40,20 @@ export function filterDogsByMINWeight(payload) {
 
 export function getDogsByName(name) {
     return async function (dispatch) {
-        const { data } = await axios.get(`http://localhost:3011/dogs?name=${name}`);
-        return dispatch({
-            type: "GET_DOGS_BY_NAME",
-            payload: data
-        });
+        try {
+            const response = await axios.get(`http://localhost:3011/dogs?name=${name}`);
+            return dispatch({
+                type: "GET_DOGS_BY_NAME",
+                payload: response.data
+            });
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                alert('Perro no encontrado');
+        }else {
+            console.error('Error al buscar perro:', error);
+          }
     };
+    }
 }
 
 export function getTemperamentsList() {
@@ -63,30 +71,6 @@ export function postDog(payload) {
     return async function (dispatch) {
         const response = await axios.post('http://localhost:3011/dogs', payload);
         return response;
-    }
-}
-
-export function getDogsByBreed(payload) {
-    return async function (dispatch) {
-        try {
-            var json = await axios.get(`http://localhost:3012/breedGroup?breedGroup=${payload}`);
-            return dispatch({
-                type: 'GET_DOGS_BY_BREED',
-                payload: json.data
-            })
-        } catch (error) {
-            console.log(error, "Error on the filters in actions file")
-        }
-    }
-}
-
-export function getBreeds() {
-    return async function (dispatch) {
-        var json = await axios.get('http://localhost:3011/breedGroups');
-        return dispatch({
-            type: 'GET_BREEDS',
-            payload: json.data
-        });
     }
 }
 
@@ -132,65 +116,3 @@ export function deleteDetails() {
     })
 }
 }
-
-// export const filterDogs = (filters) => {
-//     return (dispatch, getState) => {
-//       const { allDogs } = getState(); // Obtener los datos de los perros desde el estado
-  
-//       // Aplicar los filtros y órdenes
-//       let filteredDogs = allDogs;
-  
-//       if (filters.filterCreatedValue !== "all") {
-//         // Aplicar filtro por origen
-//         filteredDogs = filteredDogs.filter(
-//           (dog) => dog.origin === filters.filterCreatedValue
-//         );
-//       }
-  
-//       if (filters.filterTempValue !== "all") {
-//         // Aplicar filtro por temperamento
-//         filteredDogs = filteredDogs.filter((dog) =>
-//           dog.temperaments.includes(filters.filterTempValue)
-//         );
-//       }
-  
-//       if (filters.filterMaxWeight !== "all") {
-//         // Aplicar filtro por peso máximo
-//         filteredDogs = filteredDogs.filter(
-//           (dog) => dog.weight_max <= filters.filterMaxWeight
-//         );
-//       }
-  
-//       if (filters.filterMinWeight !== "all") {
-//         // Aplicar filtro por peso mínimo
-//         filteredDogs = filteredDogs.filter(
-//           (dog) => dog.weight_min >= filters.filterMinWeight
-//         );
-//       }
-  
-//       if (filters.orderBy !== "all") {
-//         // Aplicar ordenamiento por nombre
-//         filteredDogs.sort((a, b) => {
-//           if (filters.orderBy === "asc") {
-//             return a.name.localeCompare(b.name);
-//           } else {
-//             return b.name.localeCompare(a.name);
-//           }
-//         });
-//       }
-  
-//       if (filters.orderByWeight !== "all") {
-//         // Aplicar ordenamiento por peso
-//         filteredDogs.sort((a, b) => {
-//           if (filters.orderByWeight === "asc") {
-//             return b.weight_max - a.weight_max;
-//           } else {
-//             return a.weight_max - b.weight_max;
-//           }
-//         });
-//       }
-  
-//       // Enviar los perros filtrados al estado
-//       dispatch({ type: "SET_FILTERED_DOGS", payload: filteredDogs });
-//     };
-//   };

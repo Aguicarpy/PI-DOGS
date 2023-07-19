@@ -19,7 +19,7 @@ export default function DogArea() {
   };
 
   useEffect(() => {
-    dispatch(getDogs());
+   dispatch(getDogs());
   }, [dispatch]);
 
   return (

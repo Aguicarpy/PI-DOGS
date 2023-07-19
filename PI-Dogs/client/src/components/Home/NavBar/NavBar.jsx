@@ -18,7 +18,7 @@ export default function NavBar() {
               className={styles.logo}
             />
           </Link>
-          <div>
+          <div className={styles.title}>
             <h1>🐶 Woof Woof 🐶</h1>
             <p>WikiDogs</p>
           </div>

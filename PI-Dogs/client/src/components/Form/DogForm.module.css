@@ -1,136 +1,115 @@
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;700;900&display=swap");
-body {
-  font-family: "Fira Sans", sans-serif;
+.mainContainerCreation {
+  margin-top: 2%;
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(19, 40, 39);
+  box-shadow: 6px 7px 8px -6px rgba(69, 69, 69, 0.7);
+  border-radius: 15px;
+  color: white;
 }
 
-.back {
-  background-color: rgba(82, 142, 110);
-  height: 100px;
+.formContainer {
+  width: 100%;
+  min-width: 700px;
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
 }
-
-.return {
-  font-size: 1.3em;
-  margin-left: 20px;
-  color: rgb(35, 35, 35);
+form{
+    width: 650px;
 }
-.container {
-  background: #f1efef;
-  display: inline-block;
-  height: 900px;
+.button {
+  cursor: pointer;
+  line-height: 2.5;
+  width: 75px;
+}
+.button:hover{
+  background-color: rgb(182, 245, 36);
+  transform: scale(1.02,1.02);
+}
+.buttonCancel {
+  cursor: pointer;
+  line-height: 2.5;
+  width: 75px;
+  background-color: rgb(240, 29, 29);
+  color: white;
+}
+.buttonCancel:hover{
+  background-color: rgb(216, 78, 35);
+  transform: scale(1.02,1.02);
+}
+
+.Section {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  margin: 8px;
+  padding: 8px;
+  border: 1px solid white;
+  border-radius: 15px;
+  gap: 5px;
+  box-shadow: 6px 7px 8px -6px rgba(69, 69, 69, 0.7);
+}
+
+.sidebar_box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.sidebar_box > h4 {
   width: 100%;
 }
-
-.form {
+.selectedItems {
   display: flex;
-  justify-content: center;
   flex-direction: row;
-  height: 40%;
-}
-
-.title {
-  margin-bottom: -40px;
-
-  font-size: 2rem;
-  font-weight: 900;
-  padding-bottom: 50px;
-  padding-top: 40px;
-}
-
-.titles {
-  display: flex;
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: #181111;
-  flex-direction: column;
-  justify-content: space-evenly;
+  flex-wrap: wrap;
   align-items: baseline;
-  margin-top: 32.5px;
-  margin-right: 5%;
+  background-color: rgba(255, 255, 255, 0.281);
+  border-radius: 15px;
+  gap: 5px;
+  margin: 5px 8px;
+  padding: 3px 10px;
 }
-
-.inputs {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: baseline;
-  height: 77%;
-  margin-top: 59px;
+.selectedItems > button {
+    background-color:red;
+    width: 25px;
 }
-
-.heightDiv {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: row;
+label {
+  width: 100%;
 }
-
-.weightDiv {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: row;
+input {
+  width: 100%;
+  line-height: 1.8;
 }
-
-.submit {
-  display: flex;
-  flex-flow: wrap column;
-  align-items: center;
+input::placeholder {
+  color: rgb(163, 207, 118);
 }
-
-.buttonSubmit {
-  display: flex;
-  border: 1px solid rgba(82, 142, 110);
-  border-radius: 20px;
-  width: 280px;
-  height: 70px;
-  margin-top: 50px;
-  flex-flow: column wrap;
-  align-items: center;
-  font-size: larger;
-  font-weight: 900;
-  justify-content: center;
-  background-color: rgba(82, 142, 110);
-  color: #181111;
-  cursor: pointer;
+.error {
+  font-size: 10px;
+  color: red;
 }
-
-.buttonSubmit:hover {
-  background-color: rgb(120, 213, 163);
-}
-
-.buttonTemperament {
-  background: none;
-  width: 14%;
-  height: 40px;
-  border-radius: 20px;
-  border-color: #f8f363;
-  color: #181111;
-  font-weight: 700;
-  position: relative;
-  cursor: pointer;
-  bottom: 2px;
-}
-
-.errors {
-  color: rgb(255, 84, 84);
-  font-size: smaller;
-  display: flex;
-  flex-flow: wrap column;
-  align-items: center;
-  text-align: left;
-  margin: 0 5% 0 0;
-}
-
-.footerPage {
-  background-color: rgb(16, 28, 22);
+.buttonSection {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 10%;
 }
 
-.footerDiv {
-  text-align: center;
-  display: contents;
+option {
+  line-height: 2;
+}
+.styled_select {
+  width: 240px;
+  height: 34px;
+  overflow: hidden;
+  border: 1px solid #ccc;
 }

@@ -3,53 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { postDog, getTemperamentsList } from "../../redux/actions";
 import styles from "./DogForm.module.css";
+import validate from "../../helpers/validate";
 
-function validateForm(input) {
-  let errors = {};
 
-  // NAME
-  if (!input.name) {
-    errors.name = "You must type a name";
-  } else {
-    errors.name = "";
-  }
-
-  // WEIGHTS
-  if (!input.weight_min) {
-    // weight min
-    errors.weight_min = "Type a valid minimal weight number";
-  } else if (!/\d{1,2}/gi.test(input.weight_min)) {
-    errors.weight_min = "Weight must have min values. Example: '25'";
-  } else {
-    errors.weight_min = "";
-  }
-  if (!input.weight_max) {
-    // weight max
-    errors.weight_max = "Type a valid maxim weight number";
-  } else if (!/\d{1,2}/gi.test(input.weight_max)) {
-    errors.weight_max = "Weight must have max values. Example: '25'";
-  } else {
-    errors.weight_max = "";
-  }
-  // HEIGHTS
-  if (!input.height_min) {
-    // height min
-    errors.height_min = "Type a valid minimal height number";
-  } else if (!/\d{1,2}/gi.test(input.height_min)) {
-    errors.height_min = "Height must have min values. Example: '25'";
-  } else {
-    errors.height_min = "";
-  }
-  if (!input.height_max) {
-    // height max
-    errors.height_max = "Type a valid maxim height number";
-  } else if (!/\d{1,2}/gi.test(input.height_max)) {
-    errors.height_max = "Height must have max values. Example: '25'";
-  } else {
-    errors.height_max = "";
-  }
-  return errors;
-}
 
 export default function DogCreation() {
   const dispatch = useDispatch();
@@ -61,7 +17,7 @@ export default function DogCreation() {
     }
   );;
   const [errors, setErrors] = useState({});
-
+  const [isFormComplete, setIsFormComplete] = useState(false);
   const [input, setInput] = useState({
     name: "",
     image:"",
@@ -79,7 +35,7 @@ export default function DogCreation() {
       [e.target.name]: e.target.value,
     });
     setErrors(
-      validateForm({
+      validate({
         ...input,
         [e.target.name]: e.target.value,
       })
@@ -99,6 +55,10 @@ export default function DogCreation() {
       temperament: input.temperament.filter((temp) => temp !== el),
     });
   }
+  useEffect(() => {
+    const requiredFieldsFilled = Object.values(input).every(value => value !== '');
+    setIsFormComplete(requiredFieldsFilled);
+  }, [input]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -136,17 +96,17 @@ export default function DogCreation() {
     <Fragment>
       <div className={styles.mainContainerCreation}>
         <div>
-          <h2>Create your Woof</h2>
+          <h2>Crea a tu perro</h2>
         </div>
         <div className={styles.formContainer}>
           <form onSubmit={(e) => handleSubmit(e)}>
             <div className={styles.Section}>
-              <label>Name:</label>
+              <label>Nombre:</label>
               <input
                 type="text"
                 value={input.name}
                 name="name"
-                placeholder="Grand Canadian Bulldog"
+                placeholder="Ej: Grand Canadian Bulldog..."
                 onChange={(e) => handleChange(e)}
                 required
               />
@@ -155,12 +115,12 @@ export default function DogCreation() {
               </div>
             </div>
             <div className={styles.Section}>
-              <label>Image URL:</label>
+              <label>URL:</label>
               <input
                 type="url"
                 value={input.image}
                 name="image"
-                placeholder="http://myimageontheweb.com"
+                placeholder="Ej: http://myimageontheweb.com..."
                 onChange={(e) => handleChange(e)}
               />
               <div>
@@ -168,25 +128,25 @@ export default function DogCreation() {
               </div>
             </div>
             <div className={styles.Section}>
-              <h4>Heights</h4>
-              <label>Min</label>
+              <h4>Alturas</h4>
+              <label>Minimo</label>
               <input
                 type="number"
                 value={input.height_min}
                 name="height_min"
-                placeholder="20"
+                placeholder="Ej: 20"
                 onChange={(e) => handleChange(e)}
                 required
               />
               <div>
                 <p className={styles.error}>{errors.height_min}</p>
               </div>
-              <label>Max</label>
+              <label>Máximo</label>
               <input
                 type="number"
                 value={input.height_max}
                 name="height_max"
-                placeholder="50"
+                placeholder="Ej: 50"
                 onChange={(e) => handleChange(e)}
                 required
               />
@@ -195,25 +155,25 @@ export default function DogCreation() {
               </div>
             </div>
             <div className={styles.Section}>
-              <h4>Weights</h4>
-              <label>Min</label>
+              <h4>Pesos</h4>
+              <label>Minimo</label>
               <input
                 type="number"
                 value={input.weight_min}
                 name="weight_min"
-                placeholder="15"
+                placeholder="Ej: 15"
                 onChange={(e) => handleChange(e)}
                 required
               />
               <div>
                 <p className={styles.error}>{errors.weight_min}</p>
               </div>
-              <label>Max</label>
+              <label>Máximo</label>
               <input
                 type="number"
                 value={input.weight_max}
                 name="weight_max"
-                placeholder="32"
+                placeholder="Ej: 32"
                 onChange={(e) => handleChange(e)}
                 required
               />
@@ -222,17 +182,17 @@ export default function DogCreation() {
               </div>
             </div>
             <div className={styles.Section}>
-              <label>Life Span</label>
+              <label>Tiempo de vida</label>
               <input
                 type="text"
                 value={input.life_span}
                 name="life_span"
-                placeholder="12 - 15 years"
+                placeholder="Ej: 12 - 15 years"
                 onChange={(e) => handleChange(e)}
               />
             </div>
             <div className={styles.Section}>
-              <label>Temperaments</label>
+              <label>Temperamentos</label>
               <select onChange={(e) => handleSelect(e)} className={styles.styled_select}>
                 {temperament.map((temp) => {
                   return (
@@ -243,7 +203,7 @@ export default function DogCreation() {
                 })}
               </select>
               <div className={styles.sidebar_box}>
-                <h4>You have selected that:</h4>
+                <h4>Seleccionados:</h4>
                 {input.temperament.map((el) => (
                   <div key={el} className={styles.selectedItems}>
                     <p>{el}</p>
@@ -254,10 +214,10 @@ export default function DogCreation() {
             </div>
             <div className={styles.buttonSection}>
               <Link to="/home">
-                <button className={styles.buttonCancel}>Cancel</button>
+                <button className={styles.buttonCancel}>Cancelar</button>
               </Link>
-              <button className={styles.button} type="submit">
-                Creat 🐕
+              <button className={styles.button} type="submit" disabled={!isFormComplete}>
+               Crear 🐕
               </button>
             </div>
           </form>

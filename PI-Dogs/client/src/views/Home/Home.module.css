@@ -3,7 +3,4 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    background-image: url('./../../assets/background_home.jpg');
-    background-position: flex;
-    /* background-size: 100% 100%; */
 }

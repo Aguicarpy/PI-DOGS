@@ -15,7 +15,6 @@ export default function SearchBar() {
       dispatch(getDogs()).then(() => setAllDogs(allDogs));
     } else {
       dispatch(getDogsByName(dogState))
-      // setDogsState("");
     }
   }
   function handleInputChange(e) {

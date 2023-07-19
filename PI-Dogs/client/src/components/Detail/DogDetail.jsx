@@ -1,14 +1,13 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteDetails, getDetails } from "../../redux/actions";
 import styles from "./DogDetail.module.css";
-// import tinyDog from "../../assets/dog.svg";
-// import heart from "../../assets/heart.svg";
-// import scale from "../../assets/scale.svg";
-// import bone from "../../assets/bones.svg";
+import heart from "../../assets/heart.jpg";
+import scale from "../../assets/metric.png";
+import bone from "../../assets/bone.png";
 
-export default function DogDetail() {
+const DogDetail = () => {
   const dispatch = useDispatch();
   const {id} = useParams()
 
@@ -20,53 +19,36 @@ export default function DogDetail() {
   const myDog = useSelector((state) => state.details);
 
   return (
-    <Fragment>
+    <>
       {myDog ? (
         <div key={myDog.id} className={styles.bodix}>
           <div className={styles.mainContainer}>
             <h2 className={styles.mainTitle}>{myDog.name}</h2>
             <img src={myDog.image} alt={myDog.name} className={styles.image} />
             <div className={styles.detailsContainer}>
-              {myDog.breed_group ? (
-                <div className={styles.breed_group}>
-                  <div className={styles.imageSection}>
-                    <img
-                      // src={tinyDog}
-                      alt="a tiny svg dog"
-                      className={styles.detailsSVG}
-                    />
-                  </div>
-                  <div className={styles.infoSection}>
-                    <h3>Breed group: </h3>
-                    <p>{myDog.breed_group}</p>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
               <div className={styles.life_span}>
                 <div className={styles.imageSection}>
                   <img
-                    // src={heart}
+                    src={heart}
                     alt="a tiny svg dog"
                     className={styles.detailsSVG}
                   />
                 </div>
                 <div className={styles.infoSection}>
-                  <h3>Life span: </h3>
+                  <h4>Edad: </h4>
                   <p>{myDog.life_span}</p>
                 </div>
               </div>
               <div className={styles.weights}>
                 <div className={styles.imageSection}>
                   <img
-                    // src={scale}
+                    src={scale}
                     alt="a tiny svg dog"
                     className={styles.detailsSVG}
                   />
                 </div>
                 <div className={styles.infoSection}>
-                  <h3>Weight: </h3>
+                  <h4>Peso: </h4>
                   <p>Min: {myDog.weight_min}</p>
                   <p>Max: {myDog.weight_max}</p>
                 </div>
@@ -74,13 +56,13 @@ export default function DogDetail() {
               <div className={styles.heights}>
                 <div className={styles.imageSection}>
                   <img
-                    // src={bone}
+                    src={bone}
                     alt="a tiny svg bone"
                     className={styles.detailsSVG}
                   />
                 </div>
                 <div className={styles.infoSection}>
-                  <h3>Height: </h3>
+                  <h4>Altura: </h4>
                   <p>Min: {myDog.height_min}</p>
                   <p>Max: {myDog.height_max}</p>
                 </div>
@@ -90,7 +72,7 @@ export default function DogDetail() {
                 <div className={styles.infoSection}>
                   {
                     <div>
-                      <h3>Temperament: </h3>
+                      <h4>Temperamento: </h4>
                       <p>
                         {myDog.createdInDB
                           ? myDog.temperaments.map((el) => el.name).join(", ")
@@ -109,6 +91,8 @@ export default function DogDetail() {
       ) : (
         <h2>Loading...</h2>
       )}
-    </Fragment>
+    </>
   );
 }
+
+export default DogDetail;
