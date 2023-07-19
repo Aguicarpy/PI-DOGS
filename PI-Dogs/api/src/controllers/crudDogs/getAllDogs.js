@@ -29,6 +29,9 @@ const getDBInfoDog = async () => {
             through: {
                 attributes: [],
             },
+            order: [
+                ['ASC']
+            ],
         }
     });
     return dogsDB;
