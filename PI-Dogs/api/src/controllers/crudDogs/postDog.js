@@ -1,22 +1,15 @@
 const {Dog, Temperament} = require('../../db')
 
-const postDog = async(name, image, maxHeight, minHeight, minWeight, maxWeight, age, temperament) => {
-   
-    const newCreate = await Dog.create({name, image, maxHeight, minHeight, minWeight, maxWeight, age})
-    
-    // await Dog.findAll({
-    //     include: Temperament,
-        
-    // }) 
-    temperament.map(( async (temp) => {
+const postDog = async(name, image, height_max, height_min, weight_min, weight_max, life_span, temperament) => {
+    const createDog = await Dog.create({name, image, height_max, height_min, weight_min, weight_max, life_span})
+    //Se incluyen los temperamentos
+    temperament.map(async el => {
         const findTemp = await Temperament.findAll({
-            where: {
-                name: temp
-            }
-        })
-        newCreate.addTemperaments(findTemp)
-    }))
-    return newCreate
+            where: { name: el }
+        });
+        createDog.addTemperament(findTemp);
+    })
+    return createDog
 }
 
 module.exports = postDog

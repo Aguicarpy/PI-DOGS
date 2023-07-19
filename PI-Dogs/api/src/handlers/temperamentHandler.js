@@ -5,53 +5,42 @@ const axios = require('axios')
 const {API_KEY} = process.env
 
 const handlerAllTemps = async(req, res) => {
-    // try {
-    //     const alltemps = await getAllTemps();
-    //     return alltemps ? res.json(alltemps) : res.status(404).json('Temperament not found')
-    // } catch (error) {
-    //    return res.status(500).json({error: error.message}) 
-    // }
-    const allData = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`);
     try {
-        let everyTemperament = allData.data.map(dog => dog.temperament ? dog.temperament : "No info").map(dog => dog?.split(', '));
-        /* Set para hacer UNIQUE :: Stackoverflow */
-        let eachTemperament = [...new Set(everyTemperament.flat())];
-        eachTemperament.forEach(el => {
-            if (el) { // temperament : ,
-                Temperament.findOrCreate({
-                    where: { name: el }
-                });
-            }
-        });
-        eachTemperament = await Temperament.findAll();
-        res.status(200).json(eachTemperament);
+        const alltemps = await getAllTemps()
+        return alltemps ? res.status(200).json(alltemps) : res.status(404).send('Temperamento no existente')
     } catch (error) {
-        res.status(404).send(error)
+        console.error(error);
+        res.status(500).json({ error: "Ocurrió un error en el servidor" });
     }
 }
 
 const handlerSearchTemperaments = async(req,res) => {
-    const { temperament } = req.query;
-    const everyDog = await getAllDogs();
-    const dogSearchResult = everyDog.filter((dog) => {
-        if (temperament === 'all') return everyDog
-        else if (dog.temperament) {
-            return (dog.temperament.toLowerCase()).includes(temperament.toLowerCase())
-        }
-    });
-    res.status(200).json(dogSearchResult);
+    try {
+        const { temperament } = req.query;
+        const everyDog = await getAllDogs(); //llama a todos los perros
+        const dogSearchResult = everyDog.filter((dog) => {
+            if (temperament === 'all') return everyDog //recibe todos los temperamentos si la relacion es que hay todos los perros
+            else if (dog.temperament) { //temperamento especifico de un perro
+                return (dog.temperament.toLowerCase()).includes(temperament.toLowerCase())
+            }
+        });
+        return dogSearchResult ? res.status(200).json(dogSearchResult) : res.status(404).send('Temperamentos no encontrados')
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Ocurrió un error en el servidor" });
+    }
 }
 
 const handlerPostDog = async(req, res) => {
-    try{
-    const newTemperament = req.params.temperament;
-    const postedTemp = await Temperament.create({
-       name: newTemperament,
-    });
-    return res.status(200).json(postedTemp)
-    } catch (error) {
-        res.status(404).send(error)
-    }
+    // try{
+    // const newTemperament = req.params.temperament;
+    // const postedTemp = await Temperament.create({
+    //    name: newTemperament,
+    // });
+    // return res.status(200).json(postedTemp)
+    // } catch (error) {
+    //     res.status(404).send(error)
+    // }
 }
 
 
