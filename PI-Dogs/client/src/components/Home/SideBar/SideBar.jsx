@@ -67,7 +67,7 @@ const SideBar = () => {
         <hr />
         <div className={styles.filterSection}>
           <h5 className={styles.filterHeader}>Nombre</h5>
-          <select onChange={(e) => {handleClickOrder(e)}}>
+          <select name="orderName" onChange={(e) => {handleClickOrder(e)}}>
             <option defaultValue value="all" hidden>Ordenar por Nombre</option>
             <option value="asc">Ascendente: A - Z</option>
             <option value="desc">Descendente: Z - A</option>
@@ -75,7 +75,7 @@ const SideBar = () => {
         </div>
         <div className={styles.filterSection}>
           <h5 className={styles.filterHeader}>Peso</h5>
-          <select onChange={(e) => {handleClickOrderWeight(e)}}>
+          <select name="orderWeight" onChange={(e) => {handleClickOrderWeight(e)}}>
             <option defaultValue value="all" hidden>Ordenar por Peso</option>
             <option value="asc">Orden: Mayor peso</option>
             <option value="desc">Orden: Menor peso</option>
@@ -83,7 +83,7 @@ const SideBar = () => {
         </div>
         <div className={styles.filterSection}>
           <h5 className={styles.filterHeader}>Origen</h5>
-          <select onChange={(e) => {handleFilterCreated(e)}}>
+          <select name="filterOrigin" onChange={(e) => {handleFilterCreated(e)}}>
             <option defaultValue value="all">Todos 🐶</option>
             <option value="created">Creados 🐶</option>
             <option value="inDB">DataBase 🐶</option>
@@ -91,7 +91,7 @@ const SideBar = () => {
         </div>
         <div className={styles.filterSection}>
           <h5 className={styles.filterHeader}>Temperamento</h5>
-          <select onChange={(e) => handleFilteredByTemp(e)}>
+          <select name="filterTemp" onChange={(e) => handleFilteredByTemp(e)}>
             <option value="all">Todos</option>
             {temperaments.map((temp) => {
               return (
@@ -104,7 +104,7 @@ const SideBar = () => {
         </div>
         <div className={styles.filterSection}>
           <h5 className={styles.filterHeader}>Peso mínimo</h5>
-          <select onChange={(e) => handleFilteredMINWeight(e)}>
+          <select name="filterMin" onChange={(e) => handleFilteredMINWeight(e)}>
             <option value="all">Sin especificar</option>
             {allDogsMinWeights.map((minWeight) => {
               return minWeight ? (
@@ -118,7 +118,7 @@ const SideBar = () => {
           </select>
         <div className={styles.filterSection}>
           <h5 className={styles.filterHeader}>Peso máximo</h5>
-          <select onChange={(e) => handleFilteredMAXWeight(e)}>
+          <select name="filterMax" onChange={(e) => handleFilteredMAXWeight(e)}>
             <option value="all">Sin especificar</option>
             {allDogsMaxWeights.map((maxWeight) => {
               return maxWeight ? (

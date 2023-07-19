@@ -27,6 +27,7 @@ const SearchBar = () => {
   return (
     <div className={styles.searchBarObject}>
       <input
+        name="search"
         type="text"
         placeholder="Buscar un perro..."
         className={styles.input}

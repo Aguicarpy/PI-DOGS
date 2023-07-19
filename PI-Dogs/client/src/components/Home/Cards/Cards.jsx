@@ -1,20 +1,20 @@
 import Card from "./Card";
 import Pagination from "../../Pagination/Pagination";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getDogs } from "../../../redux/actions";
 import styles from "./Cards.module.css";
 
-const Cards = () => {
+const Cards = ({currentPage,setCurrentPage,dogsPerPage,indexOfFirstDog,indexOfLastDog}) => {
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.allDogs);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [dogsPerPage] = useState(8);
-  const indexOfLastDog = currentPage * dogsPerPage;
-  const indexOfFirstDog = indexOfLastDog - dogsPerPage;
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [dogsPerPage] = useState(8);
+  // const indexOfLastDog = currentPage * dogsPerPage;
+  // const indexOfFirstDog = indexOfLastDog - dogsPerPage;
   const currentDogs = allDogs.slice(indexOfFirstDog, indexOfLastDog);
-  const pagination = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const paginate = (page) => {
+    setCurrentPage(page);
   };
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Cards = () => {
         <Pagination
           dogsPerPage={dogsPerPage}
           allDogs={allDogs.length}
-          pagination={pagination}
+          paginate={paginate}
           currentPage={currentPage}
         />
         <div className={styles.pagination}></div>

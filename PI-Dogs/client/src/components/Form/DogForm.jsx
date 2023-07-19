@@ -78,9 +78,10 @@ const DogCreation = () => {
           <form onSubmit={(e) => handleSubmit(e)}>
             {/* Campo Nombre */}
             <div className={styles.Section}>
-              <label>Nombre:</label>
-              <input type="text" value={input.name} name="name" placeholder="Ej: Grand Canadian Bulldog..." onChange={(e) => handleChange(e)} required />
-              <div>
+              <label>Nombre: 
+                <input type="text" value={input.name} autoComplete="name" name="name" placeholder="Ej: Grand Canadian Bulldog..." onChange={(e) => handleChange(e)} required />
+              </label>
+            <div>
                 <p className={styles.error}>{errors.name}</p>
               </div>
             </div>
@@ -88,9 +89,10 @@ const DogCreation = () => {
 
             {/* Campo Link */}
             <div className={styles.Section}>
-              <label>URL:</label>
-              <input type="url" value={input.image} name="image" placeholder="Ej: http://myimageontheweb.com..." onChange={(e) => handleChange(e)} />
-              <div>
+              <label>URL:
+                <input type="url" value={input.image} name="image" placeholder="Ej: http://myimageontheweb.com..." onChange={(e) => handleChange(e)} />
+                </label>
+            <div>
                 <p className={styles.error}>{errors.image}</p>
               </div>
             </div>
@@ -99,14 +101,15 @@ const DogCreation = () => {
             {/* Campo Alturas */}
             <div className={styles.Section}>
               <h4>Alturas</h4>
-              <label>Minimo</label>
-              <input type="number" value={input.height_min} name="height_min" placeholder="Ej: 20" onChange={(e) => handleChange(e)} required />
+              <label>Minimo
+                <input type="number" value={input.height_min} name="height_min" placeholder="Ej: 20" onChange={(e) => handleChange(e)} required />
+              </label>
               <div>
                 <p className={styles.error}>{errors.height_min}</p>
               </div>
-              <label>Máximo</label>
-              <input type="number" value={input.height_max} name="height_max" placeholder="Ej: 50" onChange={(e) => handleChange(e)} required
-              />
+              <label>Máximo
+                <input type="number" value={input.height_max} name="height_max" placeholder="Ej: 50" onChange={(e) => handleChange(e)} required />
+              </label>
               <div>
                 <p className={styles.error}>{errors.height_max}</p>
               </div>
@@ -116,13 +119,15 @@ const DogCreation = () => {
             {/* Campo Pesos */}
             <div className={styles.Section}>
               <h4>Pesos</h4>
-              <label>Minimo</label>
-              <input type="number" value={input.weight_min} name="weight_min" placeholder="Ej: 15" onChange={(e) => handleChange(e)} required />
+              <label>Minimo
+                <input type="number" value={input.weight_min} name="weight_min" placeholder="Ej: 15" onChange={(e) => handleChange(e)} required />
+              </label>
               <div>
                 <p className={styles.error}>{errors.weight_min}</p>
               </div>
-              <label>Máximo</label>
-              <input type="number" value={input.weight_max} name="weight_max" placeholder="Ej: 32" onChange={(e) => handleChange(e)} required />
+              <label>Máximo
+                <input type="number" value={input.weight_max} name="weight_max" placeholder="Ej: 32" onChange={(e) => handleChange(e)} required />
+              </label>
               <div>
                 <p className={styles.error}>{errors.weight_max}</p>
               </div>
@@ -131,8 +136,9 @@ const DogCreation = () => {
 
             {/* Campo Edad */}
             <div className={styles.Section}>
-              <label>Tiempo de vida</label>
-              <input type="text" value={input.life_span} name="life_span" placeholder="Ej: 12 - 15 years" onChange={(e) => handleChange(e)} />
+              <label>Tiempo de vida
+                <input type="text" value={input.life_span} name="life_span" placeholder="Ej: 12 - 15 years" onChange={(e) => handleChange(e)} />
+              </label>
             <div>
             <p className={styles.error}>{errors.life_span}</p>
             </div>
@@ -140,8 +146,8 @@ const DogCreation = () => {
             {/* Campo Edad */}
             {/* Select Temperamentos */}
             <div className={styles.Section}>
-              <label>Temperamentos</label>
-              <select onChange={(e) => handleSelect(e)} className={styles.styled_select}>
+              <label>Temperamentos
+              <select name="temps" onChange={(e) => handleSelect(e)} className={styles.styled_select}>
               <option>Seleccione temperamento:</option>
                 {temperament.map((temp) => {
                   return (
@@ -151,6 +157,7 @@ const DogCreation = () => {
                   )})
                 }
               </select>
+              </label>
               <div className={styles.sidebar_box}>
                 <h4>Seleccionados:</h4>
                 {input.temperament.map((el) => (
