@@ -1,10 +1,12 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Card.module.css";
-export default function DogCard( { id, name, image, temperament, temperaments, weight_max, weight_min } ) {
-  if (!temperaments) {
+
+const Card = ( { id, name, image, temperament, temperaments, weight_max, weight_min } ) => {
+  if(!temperaments) {
+    // Renderizado perro de la API
     return (
-      <Fragment>
+      <>
         <div className={styles.dogCard}>
           <Link to={"/dogs/" + id}>
             <div className={styles.titleArea}>
@@ -16,52 +18,46 @@ export default function DogCard( { id, name, image, temperament, temperaments, w
                 {temperament ? (
                   <h5 className={styles.dogTemp}>{temperament}</h5> 
                   ) : (
-                    <br />
+                    <h5>Sin temperamento...</h5>
                     )}
               </div>
               <div className={styles.imageArea}>
-                <img
-                  className={styles.dogImage}
-                  src={image}
-                  alt={`A dog wich is ` + { temperament }}
-                  height="140px"
-                />
+                <img className={styles.dogImage} src={image} alt={name} height="140px" />
               </div>
             </div>
           </Link>
         </div>
-      </Fragment>
+      </>
     );
   } else {
+    // Renderizado perro creado
     return (
-      <Fragment>
+      <>
         <div className={styles.dogCard}>
           <Link to={"/dogs/" + id}>
             <div className={styles.titleArea}>
               <h4 className={styles.dogName}>{name}</h4>
+              <h5 className={styles.dogName}>{weight_min} - {weight_max} kg</h5>
             </div>
             <div className={styles.infoArea}>
               <div className={styles.tempArea}>
                 {temperaments ? (
                   <h5 className={styles.dogTemp}>
-                    {temperaments.map((temp) => `${temp.name} `).join(', ')}
+                    {temperaments.map((temp) => temp.name).join(', ')}
                   </h5>
                 ) : (
                   <br />
                 )}
               </div>
               <div className={styles.imageArea}>
-                <img
-                  className={styles.dogImage}
-                  src={image}
-                  alt={`A dog`}
-                  height="140px"
-                />
+                <img className={styles.dogImage} src={image} alt={name} height="140px" />
               </div>
             </div>
           </Link>
         </div>
-      </Fragment>
+      </>
     );
   }
 }
+
+export default Card;

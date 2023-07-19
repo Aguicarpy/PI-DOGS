@@ -1,16 +1,17 @@
-import React, { Fragment } from "react";
 import { Link } from 'react-router-dom';
 import styles from '../Landing/Landing.module.css'
 
-export default function LandingPage(){
+const LandingPage = () => {
     return(
-        <Fragment>
+        <>
             <div className={styles.hero}>
-                <h1 className={styles.title}>Welcome to Woof</h1>
+                <h1 className={styles.title}>🐶 Bienvenido a la Woof Woof Page 🐶</h1>
                 <Link to='/home'>
-                    <button className={styles.bubblyButton}>Let's Woof</button>
+                    <button className={styles.bubblyButton}>Ingresar</button>
                 </Link>
             </div>
-        </Fragment>
+        </>
     )
 }
+
+export default LandingPage;

@@ -28,11 +28,7 @@ const DogDetail = () => {
             <div className={styles.detailsContainer}>
               <div className={styles.life_span}>
                 <div className={styles.imageSection}>
-                  <img
-                    src={heart}
-                    alt="a tiny svg dog"
-                    className={styles.detailsSVG}
-                  />
+                  <img src={heart} alt="heart" className={styles.details} />
                 </div>
                 <div className={styles.infoSection}>
                   <h4>Edad: </h4>
@@ -41,11 +37,7 @@ const DogDetail = () => {
               </div>
               <div className={styles.weights}>
                 <div className={styles.imageSection}>
-                  <img
-                    src={scale}
-                    alt="a tiny svg dog"
-                    className={styles.detailsSVG}
-                  />
+                  <img src={scale} alt="scale" className={styles.details} />
                 </div>
                 <div className={styles.infoSection}>
                   <h4>Peso: </h4>
@@ -55,11 +47,7 @@ const DogDetail = () => {
               </div>
               <div className={styles.heights}>
                 <div className={styles.imageSection}>
-                  <img
-                    src={bone}
-                    alt="a tiny svg bone"
-                    className={styles.detailsSVG}
-                  />
+                  <img src={bone} alt="bone" className={styles.details} />
                 </div>
                 <div className={styles.infoSection}>
                   <h4>Altura: </h4>
@@ -70,26 +58,24 @@ const DogDetail = () => {
               <br />
               <div className={styles.temperament}>
                 <div className={styles.infoSection}>
-                  {
-                    <div>
+                  {<div>
                       <h4>Temperamento: </h4>
                       <p>
                         {myDog.createdInDB
                           ? myDog.temperaments.map((el) => el.name).join(", ")
                           : myDog.temperament}
                       </p>
-                    </div>
-                  }
+                    </div>}
                 </div>
               </div>
             </div>
             <Link to="/home">
-              <button className={styles.button}>Back</button>
+              <button className={styles.button}>Atrás</button>
             </Link>
           </div>
         </div>
       ) : (
-        <h2>Loading...</h2>
+        <h2>Cargando...</h2>
       )}
     </>
   );

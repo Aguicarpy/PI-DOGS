@@ -1,4 +1,3 @@
-import React, { Fragment } from "react";
 import Card from "./Card";
 import Pagination from "../../Pagination/Pagination";
 import { useEffect, useState } from "react";
@@ -6,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getDogs } from "../../../redux/actions";
 import styles from "./Cards.module.css";
 
-export default function DogArea() {
+const Cards = () => {
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.allDogs);
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,7 +22,7 @@ export default function DogArea() {
   }, [dispatch]);
 
   return (
-    <Fragment>
+    <>
      <div className={styles.dogsArea}>
         <Pagination
           dogsPerPage={dogsPerPage}
@@ -33,7 +32,6 @@ export default function DogArea() {
         />
         <div className={styles.pagination}></div>
         {
-          
           currentDogs.map((el) => { 
             return  (
           <Card
@@ -41,13 +39,15 @@ export default function DogArea() {
             id={el.id}
             name={el.name}
             image={el.image}
-            temperament={el.temperament}
-            temperaments={el.temperaments}
+            temperament={el.temperament} //TEMPERAMENTO API
+            temperaments={el.temperaments} //TEMPERAMENTO DB
             weight_min={el.weight_min}
             weight_max={el.weight_max}
           />
         )})}
       </div>
-    </Fragment>
+    </>
   );
 }
+
+export default Cards;

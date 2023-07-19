@@ -23,21 +23,21 @@ const validate = (input) => {
   
     if (!input.life_span) {
       errors.life_span = "Por favor, ingrese edad del perro";
-    } else if (input.life_span > 20 || input.life_span < 1) {
-      errors.life_span = " life span must be in a number from 1 - 20";
+    } else if (input.life_span > 25 || input.life_span < 1) {
+      errors.life_span = " Inserte un número del 1 al 25";
     }
   
     if (Number(input.weight_min) <= 0 || Number(input.weight_min >= 100)) {
-      errors.weight_min = "Minimum heigh must be in a number from 0 - 100";
+      errors.weight_min = "Ingrese un número del 0 al 100";
     }
     if (Number(input.weight_max) <= 0 || Number(input.weight_max > 100)) {
-      errors.weight_max = "Maximun weight must be in a number from 0 - 150";
+      errors.weight_max = "Ingrese un número del 0 al 150";
     }
     if (Number(input.height_min) <= 0 || Number(input.height_min) >= 100) {
-      errors.height_min = "Minimun height must be in a number from 0 - 100";
+      errors.height_min = "Ingrese un número del 0 al 100";
     }
     if (Number(input.height_max) <= 0 || Number(input.height_max) > 100) {
-      errors.height_max = "Maximun height must be in a number from 0 - 100";
+      errors.height_max = "Ingrese un número del 0 al 100";
     }
     if (!input.temperament.length) {
       errors.temperament = "Selecciona al menos un temperamento";

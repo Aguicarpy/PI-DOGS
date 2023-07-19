@@ -1,26 +1,25 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getDogsByName, getDogs } from "../../../redux/actions";
 import styles from "./SearchBar.module.css";
 
-export default function SearchBar() {
+const SearchBar = () => {
   const [dogState, setDogsState] = useState("");
   const [allDogs, setAllDogs] = useState([]); 
   const dispatch = useDispatch();
 
   function handleClick(e) {
     e.preventDefault();
-    
     if (dogState.length === 0) {
-      dispatch(getDogs()).then(() => setAllDogs(allDogs));
+      dispatch(getDogs()).then(() => setAllDogs(allDogs)); //si no hay nada en el input, trae todos los perros
     } else {
-      dispatch(getDogsByName(dogState))
+      dispatch(getDogsByName(dogState)) //si hay algo relacionado al dispatch por name, trae el perro por name
     }
   }
   function handleInputChange(e) {
     setDogsState(e.target.value);
 
-    if (e.target.value.length === 0) {
+    if(e.target.value.length === 0) {
       dispatch(getDogs()).then(() => setAllDogs(allDogs)); // Actualizar el estado allDogs con todos los perros
     }
   }
@@ -40,3 +39,5 @@ export default function SearchBar() {
     </div>
   );
 }
+
+export default SearchBar;

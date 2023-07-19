@@ -1,11 +1,11 @@
-import { React, Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {getDogs,getTemperamentsList,filterDogsByTemperament,orderByName,filterCreated,filterDogsByMAXWeight,filterDogsByMINWeight,orderByWeight}
  from "../../../redux/actions";
 import styles from "./SideBar.module.css";
 
-export default function SideBar() {
+const SideBar = () => {
   const dispatch = useDispatch();
   const temperaments = useSelector((state) => state.temperaments).sort(
     function (a, b) {
@@ -57,8 +57,9 @@ export default function SideBar() {
     e.preventDefault();
     dispatch(filterDogsByMINWeight(e.target.value));
   }
+   
   return (
-    <Fragment>
+    <>
       <div className={styles.side}>
         <div className={styles.sideBarHeader}>
           <h3 className={styles.header}> Filtros:</h3>
@@ -139,6 +140,8 @@ export default function SideBar() {
           </div>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 }
+
+export default SideBar;

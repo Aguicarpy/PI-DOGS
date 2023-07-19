@@ -1,3 +1,5 @@
+import {GET_DOGS, GET_DOGS_BY_NAME, GET_TEMPERAMENTS_LIST, GET_DETAILS, DELETE_DETAILS, ORDER_BY_NAME, ORDER_BY_WEIGHT,FILTER_CREATED ,GET_DOGS_BY_TEMP ,FILTER_BY_MIN_WEIGHT,FILTER_BY_MAX_WEIGHT} from './actions'
+
 const initialState = {
   dogs: [],
   allDogs: [],
@@ -7,28 +9,28 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-      case 'GET_DOGS':
+      case GET_DOGS:
           return {
               ...state,
               dogs: action.payload,
               allDogs: action.payload
           }
-      case "GET_DOGS_BY_NAME":
+      case GET_DOGS_BY_NAME:
           return {
               ...state,
               allDogs: action.payload,
           }
-      case 'GET_DOGS_BY_TEMP':
+      case GET_DOGS_BY_TEMP:
           return {
               ...state,
               allDogs: action.payload,
           }
-      case 'GET_TEMPERAMENTS_LIST':
+      case GET_TEMPERAMENTS_LIST:
           return {
               ...state,
               temperaments: action.payload
           }
-      case 'FILTER_CREATED':
+      case FILTER_CREATED:
           const createdFilter = action.payload === 'created' ?
               state.dogs.filter(el => el.createdInDB === true) :
               state.dogs.filter(el => !el.createdInDB);
@@ -36,7 +38,7 @@ function rootReducer(state = initialState, action) {
               ...state,
               allDogs: createdFilter,
           }
-      case 'ORDER_BY_NAME':
+      case ORDER_BY_NAME:
           const sortedArr = action.payload === 'asc' ?
               [...state.dogs].sort(function (a, b) {
                   if (a.name > b.name) { return 1 }
@@ -52,7 +54,7 @@ function rootReducer(state = initialState, action) {
               ...state,
               allDogs: sortedArr
           }
-      case 'ORDER_BY_WEIGHT':
+      case ORDER_BY_WEIGHT:
           const sortedWeight = action.payload === 'asc' ?
               [...state.dogs].sort(function (a, b) {
                   if(a.weight_min === null) { return 0 }
@@ -70,7 +72,7 @@ function rootReducer(state = initialState, action) {
               ...state,
               allDogs: sortedWeight
           }
-      case 'FILTER_BY_MAX_WEIGHT':
+      case FILTER_BY_MAX_WEIGHT:
           const everyDog = state.allDogs
           const weightMAXFiltered = action.payload === 'all' ?
               everyDog :
@@ -79,7 +81,7 @@ function rootReducer(state = initialState, action) {
               ...state,
               allDogs: weightMAXFiltered
           }
-      case 'FILTER_BY_MIN_WEIGHT':
+      case FILTER_BY_MIN_WEIGHT:
           const allDoguis = state.allDogs
           const weightMINFiltered = action.payload === 'all' ?
               allDoguis :
@@ -92,12 +94,12 @@ function rootReducer(state = initialState, action) {
           return {
               ...state
           }
-      case 'GET_DETAILS':
+      case GET_DETAILS:
           return{
               ...state,
               details: action.payload
           }
-      case 'DELETE_DETAILS':
+      case DELETE_DETAILS:
           return{
               ...state,
               details: []
