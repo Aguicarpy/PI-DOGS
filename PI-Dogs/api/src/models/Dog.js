@@ -5,28 +5,29 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('dog', {
     id:{
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.UUID,   //Garantiza unicidad de id
+      defaultValue: DataTypes.UUIDV4,   //uuid aleatorio para nuevo registro en tabla intermediaria
+      primaryKey: true,
       allowNull: false,
-      primaryKey: true
     },
     name:{
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    height_min:{
-      type: DataTypes.INTEGER,
-      allowNull: false
+      unique: true,
     },
     weight_min:{
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    height_max:{
+    weight_max:{
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    weight_max:{
+    height_min:{
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    height_max:{
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -43,5 +44,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: true
     }
-  });
+  },
+  { timestamps: false }
+);
 };
