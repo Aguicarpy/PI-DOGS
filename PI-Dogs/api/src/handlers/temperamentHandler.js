@@ -31,18 +31,5 @@ const handlerSearchTemperaments = async(req,res) => {
     }
 }
 
-const handlerPostDog = async(req, res) => {
-    // try{
-    // const newTemperament = req.params.temperament;
-    // const postedTemp = await Temperament.create({
-    //    name: newTemperament,
-    // });
-    // return res.status(200).json(postedTemp)
-    // } catch (error) {
-    //     res.status(404).send(error)
-    // }
-}
 
-
-
-module.exports = {handlerAllTemps, handlerSearchTemperaments,handlerPostDog}
+module.exports = {handlerAllTemps, handlerSearchTemperaments,}

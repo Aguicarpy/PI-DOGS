@@ -7,7 +7,7 @@ const getApiInfoDog = async () => {
     try {
         const apiURL = await axios.get(URL);
         const apiInfo = await apiURL.data.map(({id,name, image, temperament,life_span, weight, height}) => {
-            return { // requiere datos de la API thedogapi.com
+            return { // requiere datos de la API
                 id: id,
                 name: name,
                 image: image.url,
