@@ -11,7 +11,7 @@ const Card = ( { id, name, image, temperament, temperaments, weight_max, weight_
           <Link to={"/dogs/" + id}>
             <div className={styles.titleArea}>
               <h4 className={styles.dogName}>{name}</h4>
-              <h5 className={styles.dogName}>{weight_min} - {weight_max} kg</h5>
+              <h5 className={styles.dogName}>Min: {weight_min} - Max: {weight_max} (kg)</h5>
             </div>
             <div className={styles.infoArea}>
               <div className={styles.tempArea}>
@@ -37,7 +37,7 @@ const Card = ( { id, name, image, temperament, temperaments, weight_max, weight_
           <Link to={"/dogs/" + id}>
             <div className={styles.titleArea}>
               <h4 className={styles.dogName}>{name}</h4>
-              <h5 className={styles.dogName}>{weight_min} - {weight_max} kg</h5>
+              <h5 className={styles.dogName}>Min: {weight_min} - Max: {weight_max} (kg)</h5>
             </div>
             <div className={styles.infoArea}>
               <div className={styles.tempArea}>

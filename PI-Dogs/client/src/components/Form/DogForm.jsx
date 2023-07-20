@@ -146,7 +146,7 @@ const DogCreation = () => {
             {/* Campo Edad */}
             {/* Select Temperamentos */}
             <div className={styles.Section}>
-              <label>Temperamentos
+              <label>Temperamentos: 
               <select name="temps" onChange={(e) => handleSelect(e)} className={styles.styled_select}>
               <option>Seleccione temperamento:</option>
                 {temperament.map((temp) => {

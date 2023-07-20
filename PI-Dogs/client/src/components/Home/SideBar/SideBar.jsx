@@ -30,9 +30,9 @@ const SideBar = () => {
   const allDogsMaxWeights = [...new Set(maxWeights)];
 
   useEffect(() => {
-    dispatch(getDogs());
-    dispatch(getTemperamentsList());
-  }, [dispatch]);
+    !(allDogs.length) && dispatch(getDogs());
+    !(temperaments.length) && dispatch(getTemperamentsList());
+  }, [dispatch, allDogs, temperaments]);
   
   function handleClickOrder(e) {
     e.preventDefault();
@@ -50,12 +50,13 @@ const SideBar = () => {
     dispatch(filterDogsByTemperament(e.target.value));
   }
   function handleFilteredMAXWeight(e) {
-    e.preventDefault();
-    dispatch(filterDogsByMAXWeight(e.target.value));
+    const value = e.target.value
+    value === 'all' ? dispatch(getDogs()) : dispatch(filterDogsByMAXWeight(value))
   }
   function handleFilteredMINWeight(e) {
     e.preventDefault();
-    dispatch(filterDogsByMINWeight(e.target.value));
+    const value = e.target.value
+    value === 'all' ? dispatch(getDogs()) : dispatch(filterDogsByMINWeight(value))
   }
    
   return (
