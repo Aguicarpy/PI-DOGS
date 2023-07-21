@@ -13,7 +13,6 @@ function App() {
       <Route path='/home' render={() => <Home />} ></Route>
       <Route path='/dogs/:id' render={() => <Detail />}></Route>
       <Route path='/create' render={() => <CreateDog />}></Route>
-
      </Switch>
     </div>
   );

@@ -1,4 +1,5 @@
 import axios from "axios";
+//ACTIONS-TYPES
 export const GET_DOGS = "GET_DOGS";
 export const GET_DOGS_BY_NAME = "GET_DOGS_BY_NAME";
 export const GET_TEMPERAMENTS_LIST = "GET_TEMPERAMENTS_LIST";
@@ -29,7 +30,7 @@ export function getDogsByName(name) {
   return async function (dispatch) {
     try {
       const response = await axios.get(`http://localhost:3011/dogs?name=${name}`);
-      return dispatch({
+      return dispatch({ //lo que enviará al componente para que se monte, evalua primero en el reducer
         type: GET_DOGS_BY_NAME,
         payload: response.data,
       });
@@ -58,7 +59,7 @@ export function getTemperamentsList() {
     try {
         const json = await axios.get("http://localhost:3011/temperament");
         const listOfTemperaments = json.data.map((el) => el.name);
-        return dispatch({
+        return dispatch({//lo que enviará al componente para que se monte, evalua primero en el reducer
           type: GET_TEMPERAMENTS_LIST,
           payload: listOfTemperaments,
         });
@@ -72,7 +73,7 @@ export function getDetails(id) {
   return async function (dispatch) {
     try {
       const json = await axios.get(`http://localhost:3011/dogs/${id}`);
-      return dispatch({
+      return dispatch({//lo que enviará al componente para que se monte, evalua primero en el reducer
         type: GET_DETAILS,
         payload: json.data,
       });
@@ -84,7 +85,7 @@ export function getDetails(id) {
 
 export function deleteDetails() {
   return async function (dispatch) {
-    return dispatch({
+    return dispatch({//lo que enviará al componente para que se monte, evalua primero en el reducer
       type: DELETE_DETAILS,
     });
   };
@@ -115,7 +116,7 @@ export function filterDogsByTemperament(payload) {
   return async function (dispatch) {
     try {
       var json = await axios.get(`http://localhost:3011/temperament/dog?temperament=${payload}`);
-      return dispatch({
+      return dispatch({//lo que enviará al componente para que se monte, evalua primero en el reducer
         type: GET_DOGS_BY_TEMP,
         payload: json.data,
       });
