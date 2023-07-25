@@ -1,45 +1,51 @@
-import {GET_DOGS, GET_DOGS_BY_NAME, GET_TEMPERAMENTS_LIST, GET_DETAILS, DELETE_DETAILS, ORDER_BY_NAME, ORDER_BY_WEIGHT,FILTER_CREATED ,GET_DOGS_BY_TEMP ,FILTER_BY_MIN_WEIGHT,FILTER_BY_MAX_WEIGHT} from './actions'
+import {GET_DOGS,GET_DOGS_BY_NAME,GET_TEMPERAMENTS_LIST,GET_DETAILS,DELETE_DETAILS,ORDER_BY_NAME,ORDER_BY_WEIGHT,FILTER_CREATED,GET_DOGS_BY_TEMP,FILTER_BY_MIN_WEIGHT,FILTER_BY_MAX_WEIGHT} 
+from "./actions";
 
 const initialState = {
   dogs: [],
   allDogs: [],
   temperaments: [],
-  details:[],
-}
+  details: [],
+  filteredAndSortedDogs: [],
+};
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-      case GET_DOGS:
-          return {
-              ...state,
-              dogs: action.payload,
-              allDogs: action.payload
-          }
-      case GET_DOGS_BY_NAME:
-          return {
-              ...state,
-              allDogs: action.payload,
-          }
-      case GET_DOGS_BY_TEMP:
-          return {
-              ...state,
-              allDogs: action.payload,
-          }
-      case GET_TEMPERAMENTS_LIST:
-          return {
-              ...state,
-              temperaments: action.payload
-          }
-      case FILTER_CREATED:
-          const createdFilter = action.payload === 'created' ?
-              state.dogs.filter(el => el.createdInDB === true) :
-              state.dogs.filter(el => !el.createdInDB);
-          return {
-              ...state,
-              allDogs: createdFilter,
-          }
-      case ORDER_BY_NAME:
-          const sortedArr = action.payload === 'asc' ?
+    case GET_DOGS:
+      return {
+        ...state,
+        dogs: action.payload,
+        allDogs: action.payload,
+        filteredAndSortedDogs: action.payload, // Initialize filtered and sorted dogs with all dogs data
+      };
+    case GET_DOGS_BY_NAME:
+      return {
+        ...state,
+        allDogs: action.payload,
+        filteredAndSortedDogs: action.payload, // Update filtered and sorted dogs with the filtered data
+      };
+    case GET_DOGS_BY_TEMP:
+      return {
+        ...state,
+        filteredAndSortedDogs: action.payload, // Update filtered and sorted dogs with the filtered data
+      };
+    case GET_TEMPERAMENTS_LIST:
+      return {
+        ...state,
+        temperaments: action.payload,
+      };
+    case GET_DETAILS:
+      return {
+        ...state,
+        details: action.payload,
+      };
+    case DELETE_DETAILS:
+      return {
+        ...state,
+        details: [],
+      };
+    case ORDER_BY_NAME:
+      const sortedArr = action.payload === 'asc' ?
               [...state.dogs].sort(function (a, b) {
                   if (a.name > b.name) { return 1 }
                   if (b.name > a.name) { return -1 }
@@ -52,9 +58,9 @@ function rootReducer(state = initialState, action) {
               })
           return {
               ...state,
-              allDogs: sortedArr
+              filteredAndSortedDogs: sortedArr
           }
-      case ORDER_BY_WEIGHT:
+    case ORDER_BY_WEIGHT:
           const sortedWeight = action.payload === 'asc' ?
               [...state.dogs].sort(function (a, b) {
                   if(a.weight_min === null) { return 0 }
@@ -70,43 +76,30 @@ function rootReducer(state = initialState, action) {
               })
           return {
               ...state,
-              allDogs: sortedWeight
+              filteredAndSortedDogs: sortedWeight
           }
-      case FILTER_BY_MAX_WEIGHT:
-          const everyDog = state.allDogs
-          const weightMAXFiltered = action.payload === 'all' ?
-              everyDog :
-              everyDog.filter(el => el.weight_max <= action.payload)
-          return {
-              ...state,
-              allDogs: weightMAXFiltered
-          }
-      case FILTER_BY_MIN_WEIGHT:
-          const allDoguis = state.allDogs
-          const weightMINFiltered = action.payload === 'all' ?
-              allDoguis :
-              allDoguis.filter(el => el.weight_min >= action.payload)
-          return {
-              ...state,
-              allDogs: weightMINFiltered
-          }
-      case 'POST_DOG':
-          return {
-              ...state
-          }
-      case GET_DETAILS:
-          return{
-              ...state,
-              details: action.payload
-          }
-      case DELETE_DETAILS:
-          return{
-              ...state,
-              details: []
-          }
-      default:
-          return state
+    case FILTER_CREATED:
+      const allDogsFiltered = action.payload === "all" ? state.allDogs : state.allDogs.filter((el) => el.createdInDb === (action.payload === "true"));
+      return {
+        ...state,
+        filteredAndSortedDogs: allDogsFiltered,
+      };
+    case FILTER_BY_MIN_WEIGHT:
+      const minWeightFiltered = action.payload === "all" ? state.allDogs : state.allDogs.filter((el) => el.weight_min >= parseInt(action.payload));
+      return {
+        ...state,
+        filteredAndSortedDogs: minWeightFiltered,
+      };
+    case FILTER_BY_MAX_WEIGHT:
+      const maxWeightFiltered = action.payload === "all" ? state.allDogs : state.allDogs.filter((el) => el.weight_max <= parseInt(action.payload));
+      return {
+        ...state,
+        filteredAndSortedDogs: maxWeightFiltered,
+      };
+    default:
+      return state;
   }
 }
 
 export default rootReducer;
+
