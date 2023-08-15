@@ -4,6 +4,10 @@ import Home from './views/Home/Home';
 import Detail from './views/Details/Detail';
 import CreateDog from './views/Forms/CreateDog';
 import styles from './app.module.css'
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:3011'
+// axios.defaults.baseURL = 'https://pi-dogs-production-328a.up.railway.app/'
 
 function App() {
   return (
