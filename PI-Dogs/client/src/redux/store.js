@@ -1,15 +1,13 @@
-import { legacy_createStore as createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import thunkMiddleWare from "redux-thunk";
 import reducer from "./reducer";
-import thunk from "redux-thunk";
 
+//esto lo hacemos para poder conectar mi proyecto con la extension del navegador
+const composeEnhancer = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
 
 const store = createStore(
   reducer,
-  compose(
-    applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
-);
-
+  composeEnhancer(applyMiddleware(thunkMiddleWare))
+); // esta linea sirve para poder hacer peticiones a una Api/servidor
 
 export default store;
