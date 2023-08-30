@@ -38,7 +38,7 @@ const getDBInfoDog = async () => {
             ],
         }
     });
-    return dogsDB;
+    return dogsDB
 };
 
 const getAllDogs = async () => {
