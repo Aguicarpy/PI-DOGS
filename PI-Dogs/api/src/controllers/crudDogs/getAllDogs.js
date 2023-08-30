@@ -1,11 +1,11 @@
 const axios = require('axios')
 const { API_KEY } = process.env;
 const { Temperament, Dog } = require('../../db');
-const URL = `https://api.thedogapi.com/v1/breeds?${API_KEY}`;
 
 const getApiInfoDog = async () => {
     try {
-        const apiURL = await axios.get(URL);
+        const apiURL = await axios.get('https://api.thedogapi.com/v1/breeds?api_key=live_5OTrDu7Gs6y3PZy8NC3jGft23w80la6K6heQhOjcBkzADL71rX2oz2ufIZMerkaj');
+        // console.log(apiURL);
         const apiInfo = await apiURL.data.map(({id,name, image, temperament,life_span, weight, height}) => {
             return { // requiere datos de la API
                 id: id,
@@ -21,7 +21,7 @@ const getApiInfoDog = async () => {
         });
         return apiInfo;
     } catch (error) {
-        error.response.status === 404 ? console.error('Datos no encontrados') : console.error(error.message)
+        // error.response.status === 404 ? console.error('Datos no encontrados') : console.error(error.message)
     }
 };
 
